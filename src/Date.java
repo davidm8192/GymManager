@@ -1,4 +1,4 @@
-import java.util.calender;
+import java.util.Calendar;
 
 public class Date implements Comparable<Date> {
     private int year;
@@ -6,10 +6,10 @@ public class Date implements Comparable<Date> {
     private int day;
 
     public Date() {
-        Calender c = Calender.getInstance();
-        month = c.get(Calender.MONTH);
-        day = c.get(Calender.DATE);
-        year = c.get(Calender.YEAR);
+        Calendar c = Calendar.getInstance();
+        month = c.get(Calendar.MONTH) + 1;
+        day = c.get(Calendar.DATE);
+        year = c.get(Calendar.YEAR);
     } //create an object with today’s date (see Calendar class)
 
     public Date(String date) {
@@ -18,20 +18,22 @@ public class Date implements Comparable<Date> {
 
         for(int i = 0; i < date.length(); i++) {
             char c = date.charAt(i);
-            if(c == '/') {
+            if(c == '/' && count < 2) {
                 tempNum = Integer.parseInt(temp);
                 temp = "";
                 if(count == 0) {
                     month = tempNum;
                     count++;
                 }
-                else if(count == 1) {
+                else {
                     day = tempNum;
                     count++;
                 }
-                else {
-                    year = tempNum;
-                }
+            }
+            else if(count == 2 && i == date.length() - 1) {
+                temp += c;
+                tempNum = Integer.parseInt(temp);
+                year = tempNum;
             }
             else {
                 temp += c;
