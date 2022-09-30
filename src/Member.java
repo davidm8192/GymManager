@@ -5,11 +5,11 @@ public class Member implements Comparable<Member>{
     private Date expire;
     private Location location;
 
-    public class Member() {
+    public Member() {
 
     }
 
-    public class Member(String fname, String lname, Date dob, Data expire, Location location) {
+    public Member(String fname, String lname, Date dob, Date expire, Location location) {
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;

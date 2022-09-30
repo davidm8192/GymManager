@@ -1,10 +1,15 @@
+import java.util.calender;
+
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
     private int day;
 
     public Date() {
-
+        Calender c = Calender.getInstance();
+        month = c.get(Calender.MONTH);
+        day = c.get(Calender.DATE);
+        year = c.get(Calender.YEAR);
     } //create an object with today’s date (see Calendar class)
 
     public Date(String date) {
