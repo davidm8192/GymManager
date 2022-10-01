@@ -38,6 +38,18 @@ public class Member implements Comparable<Member>{
         this.location = location;
     }
 
+    public String getFname() {
+        return fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
     public boolean isValid() {
         Date today = new Date();
 
@@ -88,8 +100,36 @@ public class Member implements Comparable<Member>{
     }
     @Override
     public boolean equals(Object obj) {
-
+        if(obj instanceof Member) {
+            Member member = (Member) obj;
+            if(member.getFname().toUpperCase().equals(this.fname.toUpperCase()) &&
+               member.getLname().toUpperCase().equals(this.lname.toUpperCase()) &&
+               member.getDob().equals(this.dob)) {
+                return true;
+            }
+        }
+        return false;
     }
     @Override
-    public int compareTo(Member member) { }
+    public int compareTo(Member member) {
+        int compareL = this.getLname().toUpperCase().compareTo(member.getLname().toUpperCase());
+        int compareF = this.getFname().toUpperCase().compareTo(member.getFname().toUpperCase());
+        if(compareL > 0) {
+            return 1; // current member's name is after
+        }
+        else if(compareL == 0) {
+            if(compareF > 0) {
+                return 1; // current member's name is after
+            }
+            else if(compareF == 0) {
+                return 0; //names are the same
+            }
+            else {
+                return -1; //current member's name is before
+            }
+        }
+        else {
+            return -1; //current member's name is before
+        }
+    }
 }
