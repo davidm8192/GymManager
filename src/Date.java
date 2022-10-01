@@ -42,6 +42,18 @@ public class Date implements Comparable<Date> {
 
     } //take “mm/dd/yyyy” and create a Date object
 
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
     @Override
     public int compareTo(Date date) { }
     public boolean isValid() { } //check if a date is a valid calendar date

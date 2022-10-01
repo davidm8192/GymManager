@@ -7,12 +7,15 @@ public class GymManager {
         String line = "";
         int counter = 0;
 
+        MemberDatabase database = new MemberDatabase();
+
         while ((line = sc.nextLine()) != null) { //TEMP continuously read command lines so that it works with >1 command line input
             String[] words = line.split(" ");
 
             switch (words[0]) {
                 case "A": {
                     // Add member
+                    addMember(database, words);
                     break;
                 }
                 case "R": {
@@ -62,9 +65,43 @@ public class GymManager {
         }
     }
 
-    public static void addMember() {}
+    public static void addMember(MemberDatabase database, String[] memberInfo) {
+        Member m = new Member();
+        m.setName(memberInfo[1], memberInfo[2]);
 
-    public static void deleteMember() {}
+        Date dob = new Date(memberInfo[3]);
+        m.setDob(dob);
+
+        Date expire = new Date(memberInfo[4]);
+        m.setExpire(expire);
+
+        switch(memberInfo[5].toUpperCase()) {
+            case "BRIDGEWATER":
+                m.setLocation(Location.BRIDGEWATER);
+                break;
+            case "EDISON":
+                m.setLocation(Location.EDISON);
+                break;
+            case "FRANKLIN":
+                m.setLocation(Location.FRANKLIN);
+                break;
+            case "PISCATAWAY":
+                m.setLocation(Location.PISCATAWAY);
+                break;
+            case "SOMERVILLE":
+                m.setLocation(Location.SOMERVILLE);
+                break;
+            default:
+                break;
+        }
+
+        // Add member to database
+        database.add(m);
+    }
+
+    public static void deleteMember(String[] memberInfo) {
+
+    }
 
     public static void displayMembers() {}
 

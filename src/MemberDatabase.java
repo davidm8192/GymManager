@@ -1,10 +1,18 @@
 public class MemberDatabase {
     private Member [] mlist;
     private int size;
+
+    public MemberDatabase() {
+        mlist = new Member[4];
+        size = 4;
+    }
+
     private int find(Member member) { }
     private void grow() { }
     public boolean add(Member member) {
-        // isValid
+        if(!member.isValid()) {
+            return false;
+        }
 
         int counter = size - 1;
 
@@ -21,8 +29,13 @@ public class MemberDatabase {
 
         return true;
     }
+
     public boolean remove(Member member) {
         // Iterate through array until member is found, set index to null
+        for(int i = 0; i < size(); i++) {
+
+        }
+
         return true;
     }
     public void print () { } //print the array contents as is

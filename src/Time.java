@@ -1,6 +1,6 @@
 public enum Time {
-    Morning (hour, minute);
-    Afternoon(hour, minute);
+    MORNING(hour, minute),
+    AFTERNOON(hour, minute);
 
     private final int hour;
     private final int minute;
@@ -11,6 +11,6 @@ public enum Time {
     }
 
     public static Time convertTime(String time) {
-        return Time.Afternoon;
+        return Time.AFTERNOON;
     }
 }
