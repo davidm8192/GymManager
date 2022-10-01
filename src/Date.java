@@ -78,40 +78,28 @@ public class Date implements Comparable<Date> {
 
     @Override
     public int compareTo(Date date) {
-        // Current year is greater: current date is AFTER
-        if(this.getYear() > date.getYear()) {
+        if(this.year > date.getYear()) {
             return 1;
         }
-        // If years are same, compare months
-        else if(this.getYear() == date.getYear()) {
-            // Current year is the same, month is greater: current date is AFTER
-            if(this.getMonth() > date.getMonth()) {
-                return 1;
-            }
-            // If months are same, compare days
-            else if(this.getMonth() == date.getMonth()) {
-                // Current year, month are the same, day is greater: current date is AFTER
-                if(this.getDay() > date.getDay()) {
-                    return 1;
-                }
-                // Current year, month, day are the same: dates are the same
-                else if(this.getDay() == date.getDay()) {
-                    return 0;
-                }
-                // Current year, month are the same, day is less: current date is BEFORE
-                else {
-                    return -1;
-                }
-            }
-            // Current year is same, month is less: current date is BEFORE
-            else {
-                return -1;
-            }
-        }
-        // Current year is less: current date is BEFORE
-        else {
+        if(this.year < date.getYear()) {
             return -1;
         }
+
+        if(this.month > date.getMonth()) {
+            return 1;
+        }
+        if(this.month < date.getMonth()) {
+            return -1;
+        }
+
+        if(this.day > date.getDay()) {
+            return 1;
+        }
+        if(this.day < date.getDay()) {
+            return -1;
+        }
+
+        return 0;
     }
     public boolean isValid() {
 

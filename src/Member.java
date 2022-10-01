@@ -117,19 +117,17 @@ public class Member implements Comparable<Member>{
         if(compareL > 0) {
             return 1; // current member's name is after
         }
-        else if(compareL == 0) {
-            if(compareF > 0) {
-                return 1; // current member's name is after
-            }
-            else if(compareF == 0) {
-                return 0; //names are the same
-            }
-            else {
-                return -1; //current member's name is before
-            }
+        if(compareL < 0) {
+            return -1; // current member's name is before
         }
-        else {
-            return -1; //current member's name is before
+
+        if(compareF > 0) {
+            return 1; // current member's name is after
         }
+        if(compareF < 0) {
+            return -1; // current member's name is before
+        }
+
+        return 0; // names are the same
     }
 }
