@@ -1,42 +1,51 @@
 public class MemberDatabase {
     private Member [] mlist;
     private int size;
-
     public MemberDatabase() {
-        mlist = new Member[4];
-        size = 4;
+        mlist = new Member[Constants.INITIAL_CAPACITY.getConstant()];
+        size = 0; // number of members
     }
 
-    private int find(Member member) { }
-    private void grow() { }
+    private int find(Member member) {
+        for(int i = 0; i < size; i++) {
+            if(member.equals(mlist[i])) {
+                return i;
+            }
+        }
+        return Constants.NOT_FOUND.getConstant();
+    }
+    private void grow() {
+
+    }
     public boolean add(Member member) {
         if(!member.isValid()) {
             return false;
         }
+        if(find(member) == Constants.NOT_FOUND.getConstant()) {
+            return false;
+        }
 
-        int counter = size - 1;
+        mlist[size] = member;
+        size++;
 
-        if(mlist[counter] != null) {
+        if(size == mlist.length) {
             // Increase array size
-            mList[counter + 1] = member;
             return true;
         }
-
-        while(mlist[counter] == null) {
-            counter--;
-        }
-        mList[counter + 1] = member;
 
         return true;
     }
 
     public boolean remove(Member member) {
-        // Iterate through array until member is found, set index to null
-        for(int i = 0; i < size(); i++) {
-
+        int memberIndex = find(member);
+        if(find(member) != Constants.NOT_FOUND.getConstant()) {
+            for(int i = memberIndex; i < size; i++) {
+                mlist[i] = mlist[i + 1];
+            }
+            size--;
+            return true;
         }
-
-        return true;
+        return false;
     }
     public void print () { } //print the array contents as is
     public void printByCounty() { } //sort by county and then zipcode
