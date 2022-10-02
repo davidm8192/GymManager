@@ -96,7 +96,7 @@ public class Member implements Comparable<Member>{
 
     @Override
     public String toString() {
-        String output = fname + " " + lname + ",  DOB: " + /*dob*/ + " , Membership expires " + /*expire*/ + ", Location: " + /*Location*/;
+       //String output = fname + " " + lname + ",  DOB: " + /*dob*/ + " , Membership expires " + /*expire*/ + ", Location: " + /*Location*/;
     }
     @Override
     public boolean equals(Object obj) {

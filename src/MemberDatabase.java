@@ -1,6 +1,8 @@
 public class MemberDatabase {
     private Member [] mlist;
     private int size;
+
+    public static final int MLIST_GROWTH_RATE = 4;
     public MemberDatabase() {
         mlist = new Member[Constants.INITIAL_CAPACITY.getConstant()];
         size = 0; // number of members
@@ -24,11 +26,11 @@ public class MemberDatabase {
         if(find(member) == Constants.NOT_FOUND.getConstant()) {
             return false;
         }
-
+//NOTE TO SELF/DAVID: WE GOTTA USE GROW METHOD PROLLY BUT IDK IF UR FINISHED WITH THIS YET
         mlist[size] = member;
-        size++;
+        size += MLIST_GROWTH_RATE;
 
-        if(size == mlist.length) {
+        if (size == mlist.length) {
             // Increase array size
             return true;
         }
