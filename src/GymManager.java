@@ -11,10 +11,11 @@ public class GymManager {
     public void run() {
         Scanner sc = new Scanner(System.in);
         String line = "";
-        int counter = 0;
         boolean run = true;
+        System.out.println("Gym Manager Running...");
 
-        while ((line = sc.nextLine()) != null) {
+        while (run) {
+            line = sc.nextLine();
             String[] words = line.split(" ");
             if(run) {
                 run = readCommand(words);
@@ -31,7 +32,8 @@ public class GymManager {
         switch (words[0]) {
             case "A": {
                 // Add member
-                addMember(database, words);
+                addMember(words);
+                //System.out.println("hi");
                 break;
             }
             case "R": {
@@ -39,7 +41,7 @@ public class GymManager {
                 break;
             }
             case "P": {
-                // Display list of members without sorting
+                database.print();
                 break;
             }
             case "PC": {
@@ -70,15 +72,15 @@ public class GymManager {
                 break;
             }
             case "Q": {
-                // Stop the program execution and display "Gym Manager terminated.",
+                System.out.println("Gym Manager terminated.");
                 return false;
             }
             default: {
                 System.out.println(words[0] + " is an invalid command!");
                 break;
             }
-            return true;
         }
+        return true;
     }
 
     private void addMember(MemberDatabase database, String[] memberInfo) {

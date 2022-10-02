@@ -23,10 +23,9 @@ public class Member implements Comparable<Member>{
         this.location = location;
     }
 
-    public void setName(String fname, String lname) {
-        this.fname = fname;
-        this.lname = lname;
-    }
+    public void setFname(String fname) { this.fname = fname; }
+
+    public void setLname(String lname) { this.lname = lname; }
 
     public void setDob(Date dob) {
         this.dob = dob;
@@ -52,10 +51,65 @@ public class Member implements Comparable<Member>{
         return dob;
     }
 
+    public Location getLocation() { return location; }
+
     public Date getExpire() { return expire; }
 
-    public boolean isValid() {
+    public boolean isDobValid() {
+        return dob.isValid();
+    }
+
+    public boolean isExpireValid() {
+        return expire.isValid();
+    }
+
+    public boolean isAbove18() {
         Date today = new Date();
+        if(today.getYear() - dob.getYear() < 18) {
+            return false;
+        }
+        if(today.getYear() - dob.getYear() == 18) {
+            if(today.getMonth() < dob.getMonth()) {
+                return false;
+            }
+            else if(today.getMonth() == dob.getMonth()) {
+                if(today.getDay() < dob.getDay()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isDobPast() {
+        Date today = new Date();
+
+        if(dob.getYear() > today.getYear()) {
+            return false;
+        }
+        if(dob.getYear() == today.getYear()) {
+            if(dob.getMonth() > today.getMonth()) {
+                return false;
+            }
+            else if(dob.getMonth() == today.getMonth()) {
+                if(dob.getDay() >= today.getDay()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidLocation() {
+        if(location == null) {
+            return false;
+        }
+        return true;
+    }
+
+    /*public boolean isValid() {
+        Date today = new Date();
+
 
         // Check if date is valid
         if(!dob.isValid() || !expire.isValid()) {
@@ -96,7 +150,7 @@ public class Member implements Comparable<Member>{
         }
 
         return true;
-    }
+    }*/
 
     @Override
     public String toString() {

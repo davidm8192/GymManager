@@ -8,6 +8,7 @@ public enum Location {
     private final String zipCode;
     private final String county;
 
+
     Location(String zipCode, String county) {
         this.zipCode = zipCode;
         this.county = county;

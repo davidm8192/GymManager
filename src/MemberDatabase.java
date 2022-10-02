@@ -1,10 +1,8 @@
 import java.util.Calendar;
 
 public class MemberDatabase {
-    private Member [] mlist;
+    private Member[] mlist;
     private int size;
-
-    private boolean getTime = getTime();
 
     public static final int MLIST_GROWTH_RATE = 4;
     public MemberDatabase() {
@@ -13,8 +11,8 @@ public class MemberDatabase {
     }
 
     private int find(Member member) {
-        for(int i = 0; i < size; i++) {
-            if(member.equals(mlist[i])) {
+        for (int i = 0; i < size; i++) {
+            if (member.equals(mlist[i])) {
                 return i;
             }
         }
@@ -24,10 +22,8 @@ public class MemberDatabase {
 
     }
     public boolean add(Member member) {
-        if(!member.isValid()) {
-            return false;
-        }
-        if(find(member) == Constants.NOT_FOUND.getConstant()) {
+
+        if (find(member) != NOT_FOUND) {
             return false;
         }
 
@@ -35,7 +31,7 @@ public class MemberDatabase {
         size++;
 
         if (size == mlist.length) {
-            // Increase array size
+            grow();
             return true;
         }
 
@@ -53,17 +49,51 @@ public class MemberDatabase {
         }
         return false;
     }
-    public void print () {
+
+    public void print() {
+        if (isEmpty()) {
+            System.out.println("Member database is empty!");
+            return;
+        }
         System.out.println("-list of members-");
         for (int i = 0; i < size; i++) {
             if (mlist[i] != null) {
                 System.out.println(mlist[i].toString());
             }
         }
+        //System.out.println(mlist[0].toString());
         System.out.println("-end of list-");
         return;
     } //print the array contents as is
-    public void printByCounty() { } //sort by county and then zipcode
-    public void printByExpirationDate() { } //sort by the expiration date
-    public void printByName() { } //sort by last name and then first name
+
+    public void printByCounty() {
+    } //sort by county and then zipcode
+
+    public void printByExpirationDate() {
+    } //sort by the expiration date
+
+    public void printByName() {
+        if (isEmpty()) {
+            System.out.println("Member database is empty!");
+            return;
+        }
+
+    } //sort by last name and then first name
+
+    /*public Member [] quickSort(Member [] memberList, int lowerBounds, int upperBounds) {
+        if (lowerBounds < upperBounds) {
+            int pivot = partition(memberList, lowerBounds, upperBounds)
+        }
+    }
+
+    public int partition(Member [] memberList, int upperBounds, int lowerBounds) {
+
+    }*/
+
+    public boolean isEmpty() {
+        if(size != 0) {
+            return false;
+        }
+        return true;
+    }
 }
