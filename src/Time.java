@@ -1,6 +1,6 @@
 public enum Time {
-    MORNING(hour, minute),
-    AFTERNOON(hour, minute);
+    MORNING(9, 30),
+    AFTERNOON(14, 0);
 
     private final int hour;
     private final int minute;

@@ -4,9 +4,12 @@ public class MemberDatabase {
     private Member[] mlist;
     private int size;
 
-    public static final int MLIST_GROWTH_RATE = 4;
+    public static final int INITIAL_CAPACITY = 4;
+    public static final int GROWTH_RATE = 4;
+    public static final int NOT_FOUND = 4;
+
     public MemberDatabase() {
-        mlist = new Member[Constants.INITIAL_CAPACITY.getConstant()];
+        mlist = new Member[INITIAL_CAPACITY];
         size = 0; // number of members
     }
 
@@ -16,11 +19,17 @@ public class MemberDatabase {
                 return i;
             }
         }
-        return Constants.NOT_FOUND.getConstant();
+        return NOT_FOUND;
     }
-    private void grow() {
 
+    private void grow() {
+        Member[] newMlist = new Member[mlist.length + GROWTH_RATE];
+        for (int i = 0; i < size; i++) {
+            newMlist[i] = mlist[i];
+        }
+        mlist = newMlist;
     }
+
     public boolean add(Member member) {
 
         if (find(member) != NOT_FOUND) {
@@ -40,8 +49,8 @@ public class MemberDatabase {
 
     public boolean remove(Member member) {
         int memberIndex = find(member);
-        if(find(member) != Constants.NOT_FOUND.getConstant()) {
-            for(int i = memberIndex; i < size; i++) {
+        if (find(member) != NOT_FOUND) {
+            for (int i = memberIndex; i < size; i++) {
                 mlist[i] = mlist[i + 1];
             }
             size--;

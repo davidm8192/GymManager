@@ -17,15 +17,12 @@ public class GymManager {
         while (run) {
             line = sc.nextLine();
             String[] words = line.split(" ");
-            if(run) {
-                run = readCommand(words);
-            }
-            else {
-                break;
-            }
+            run = readCommand(words);
+
         }
 
         sc.close();
+        System.out.println();
     }
 
     private boolean readCommand(String[] words) {
@@ -38,6 +35,7 @@ public class GymManager {
             }
             case "R": {
                 // Delete member
+                deleteMember(words);
                 break;
             }
             case "P": {
@@ -75,6 +73,9 @@ public class GymManager {
                 System.out.println("Gym Manager terminated.");
                 return false;
             }
+            case "": {
+                break;
+            }
             default: {
                 System.out.println(words[0] + " is an invalid command!");
                 break;
@@ -83,17 +84,21 @@ public class GymManager {
         return true;
     }
 
-    private void addMember(MemberDatabase database, String[] memberInfo) {
+    private void addMember(String[] memberInfo) {
         Member m = new Member();
-        m.setName(memberInfo[1], memberInfo[2]);
+        int count = 1;
 
-        Date dob = new Date(memberInfo[3]);
+        m.setFname(memberInfo[count++]);
+        m.setLname(memberInfo[count++]);
+
+        Date dob = new Date(memberInfo[count++]);
         m.setDob(dob);
 
-        Date expire = new Date(memberInfo[4]);
+        Date expire = new Date(memberInfo[count++]);
         m.setExpire(expire);
 
-        switch(memberInfo[5].toUpperCase()) {
+        String location = memberInfo[count];
+        switch(location.toUpperCase()) {
             case "BRIDGEWATER":
                 m.setLocation(Location.BRIDGEWATER);
                 break;
@@ -112,13 +117,65 @@ public class GymManager {
             default:
                 break;
         }
-
         // Add member to database
-        database.add(m);
+        if(checkIfValid(m, location)) {
+            if(!database.add(m)) {
+                System.out.println(m.getFname() + " " + m.getLname() + " is already in the database.");
+            }
+            else {
+                System.out.println(m.getFname() + " " + m.getLname() + " added.");
+            }
+        }
     }
 
-    private void deleteMember(String[] memberInfo) {
 
+
+    private boolean checkIfValid(Member m, String location) {
+        if (!m.isDobValid()) {
+            System.out.println("DOB " + m.getDob().toString() + ": invalid calendar date!");
+            return false;
+        }
+
+        if (!m.isExpireValid()) {
+            System.out.println("Expiration date " + m.getExpire().toString() + ": invalid calendar date!");
+            return false;
+        }
+
+        if (!m.isDobPast()) {
+            System.out.println("DOB " + m.getDob().toString() + ": cannot be today or a future date!");
+            return false;
+        }
+
+        if(!m.isAbove18()) {
+            System.out.println("DOB " + m.getDob().toString() + ": must be 18 or older to join!");
+            return false;
+        }
+
+        if(!m.isValidLocation()) {
+            System.out.println(location + ": invalid location!");
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void deleteMember(String[] memberInfo) {
+        Member m = new Member();
+        int count = 1;
+
+        m.setFname(memberInfo[count++]);
+        m.setLname(memberInfo[count++]);
+
+        Date dob = new Date(memberInfo[count++]);
+        m.setDob(dob);
+
+        if(!database.remove(m)) {
+            System.out.println(m.getFname() + " " + m.getLname() + " is not in the database.");
+        }
+        else {
+            System.out.println(m.getFname() + " " + m.getLname() + " removed.");
+        }
     }
 
     private void displayMembers() {}

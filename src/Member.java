@@ -168,7 +168,7 @@ public class Member implements Comparable<Member>{
             Member member = (Member) obj;
             if(member.getFname().toUpperCase().equals(this.fname.toUpperCase()) &&
                member.getLname().toUpperCase().equals(this.lname.toUpperCase()) &&
-               member.getDob().equals(this.dob)) {
+               member.getDob().compareTo(this.dob) == 0) {
                 return true;
             }
         }
