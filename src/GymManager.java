@@ -47,7 +47,7 @@ public class GymManager {
                 break;
             }
             case "PN": {
-                // Display list of members ordered by last names, then first names if last names are the same
+               database.printByName();
                 break;
             }
             case "PD": {

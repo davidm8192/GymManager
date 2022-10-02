@@ -82,22 +82,39 @@ public class MemberDatabase {
     } //sort by the expiration date
 
     public void printByName() {
-        if (isEmpty()) {
-            System.out.println("Member database is empty!");
-            return;
-        }
+        quickSort(0, size-1);
+        print();
 
     } //sort by last name and then first name
 
-    /*public Member [] quickSort(Member [] memberList, int lowerBounds, int upperBounds) {
+    public void quickSort(int lowerBounds, int upperBounds) {
         if (lowerBounds < upperBounds) {
-            int pivot = partition(memberList, lowerBounds, upperBounds)
+            int index = partition(lowerBounds, upperBounds);
+            quickSort(lowerBounds, index - 1);
+            quickSort(index + 1, upperBounds);
         }
     }
 
-    public int partition(Member [] memberList, int upperBounds, int lowerBounds) {
+    public int partition(int lowerBounds, int upperBounds) {
+        Member pivot = mlist[upperBounds];
+        int lowPtr = lowerBounds - 1;
+        for (int i = lowerBounds; i < upperBounds; i++) {
+            if (mlist[i].compareTo(pivot) < 0) { //TEMP should it be < or <=
+                lowPtr++;
+                swap(lowPtr, i);
+            }
+        }
 
-    }*/
+        swap(lowPtr + 1, upperBounds);
+        return lowPtr + 1;
+    }
+
+    public void swap(int first, int second) {
+        Member temp = mlist[first];
+        mlist[first] = mlist[second];
+        mlist[second] = temp;
+    }
+
 
     public boolean isEmpty() {
         if(size != 0) {
