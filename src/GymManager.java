@@ -14,7 +14,7 @@ public class GymManager {
         int counter = 0;
         boolean run = true;
 
-        while ((line = sc.nextLine()) != null) { //TEMP continuously read command lines so that it works with >1 command line input
+        while ((line = sc.nextLine()) != null) {
             String[] words = line.split(" ");
             if(run) {
                 run = readCommand(words);

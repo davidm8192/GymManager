@@ -134,6 +134,10 @@ public class Date implements Comparable<Date> {
         return false;
     }
 
+    public String toString() {
+        return month + "/" + day + "/" + year;
+    }
+
     public static void main(String[] args) {
         //test case 1
         Date testcase1 = new Date("2/29/2018");

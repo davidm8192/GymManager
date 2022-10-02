@@ -1,6 +1,10 @@
+import java.util.Calendar;
+
 public class MemberDatabase {
     private Member [] mlist;
     private int size;
+
+    private boolean getTime = getTime();
 
     public static final int MLIST_GROWTH_RATE = 4;
     public MemberDatabase() {
@@ -26,9 +30,9 @@ public class MemberDatabase {
         if(find(member) == Constants.NOT_FOUND.getConstant()) {
             return false;
         }
-//NOTE TO SELF/DAVID: WE GOTTA USE GROW METHOD PROLLY BUT IDK IF UR FINISHED WITH THIS YET
+
         mlist[size] = member;
-        size += MLIST_GROWTH_RATE;
+        size++;
 
         if (size == mlist.length) {
             // Increase array size
@@ -49,7 +53,16 @@ public class MemberDatabase {
         }
         return false;
     }
-    public void print () { } //print the array contents as is
+    public void print () {
+        System.out.println("-list of members-");
+        for (int i = 0; i < size; i++) {
+            if (mlist[i] != null) {
+                System.out.println(mlist[i].toString());
+            }
+        }
+        System.out.println("-end of list-");
+        return;
+    } //print the array contents as is
     public void printByCounty() { } //sort by county and then zipcode
     public void printByExpirationDate() { } //sort by the expiration date
     public void printByName() { } //sort by last name and then first name

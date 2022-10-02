@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 public class Member implements Comparable<Member>{
     private String fname;
     private String lname;
@@ -50,6 +52,8 @@ public class Member implements Comparable<Member>{
         return dob;
     }
 
+    public Date getExpire() { return expire; }
+
     public boolean isValid() {
         Date today = new Date();
 
@@ -96,7 +100,13 @@ public class Member implements Comparable<Member>{
 
     @Override
     public String toString() {
-       //String output = fname + " " + lname + ",  DOB: " + /*dob*/ + " , Membership expires " + /*expire*/ + ", Location: " + /*Location*/;
+        String output = "";
+        Calendar c = Calendar.getInstance();
+        output += fname + " " + lname + ", DOB: " + dob.toString() + ", ";
+        if (c.before(expire)) output += "Membership expired ";
+        else output += "Membership expires ";
+        output += expire.toString() + ", Location: " + location.toString();
+        return output;
     }
     @Override
     public boolean equals(Object obj) {
