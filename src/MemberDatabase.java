@@ -79,11 +79,7 @@ public class MemberDatabase {
         quickSort(0, size-1, sortType);
 
         System.out.println("-list of members sorted by county and zipcode-");
-        for (int i = 0; i < size; i++) {
-            if (mlist[i] != null) {
-                System.out.println(mlist[i].toString());
-            }
-        }
+        print();
         System.out.println("-end of list-");
     } //sort by county and then zipcode
 
@@ -97,11 +93,7 @@ public class MemberDatabase {
         quickSort(0, size-1, sortType);
 
         System.out.println("-list of members sorted by membership expiration date-");
-        for (int i = 0; i < size; i++) {
-            if (mlist[i] != null) {
-                System.out.println(mlist[i].toString());
-            }
-        }
+        print();
         System.out.println("-end of list-");
     } //sort by the expiration date
 
@@ -115,11 +107,7 @@ public class MemberDatabase {
         quickSort(0, size-1, sortType);
 
         System.out.println("-list of members sorted by last name, and first name-");
-        for (int i = 0; i < size; i++) {
-            if (mlist[i] != null) {
-                System.out.println(mlist[i].toString());
-            }
-        }
+        print();
         System.out.println("-end of list-");
     } //sort by last name and then first name
 

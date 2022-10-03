@@ -1,15 +1,29 @@
 import java.util.Scanner;
 
+/**
+ * User Interface class that processes command lines, calls the corresponding methods,
+ * and runs member and fitnessClass methods.
+ * Adds and delete members, checks if members are valid, checks members into fitness
+ * classes, and checks if member check-ins are valid.
+ * @author David Ma, Ethan Kwok
+ */
 public class GymManager {
 
     private MemberDatabase database;
     private FitnessClass fitnessData;
 
+    /**
+     * Creates a database and fitnessData object.
+     */
     public GymManager() {
         database = new MemberDatabase();
         fitnessData = new FitnessClass();
     }
 
+    /**
+     * Continuously reads command line inputs.
+     * Outputs when the Gym Manager is running and calls the isReadCommand method for each input.
+     */
     public void run() {
         Scanner sc = new Scanner(System.in);
         String line = "";
@@ -19,7 +33,7 @@ public class GymManager {
         while (run) {
             line = sc.nextLine();
             String[] words = line.split(" ");
-            run = readCommand(words);
+            run = isReadCommand(words);
 
         }
 
@@ -27,7 +41,12 @@ public class GymManager {
         System.out.println();
     }
 
-    private boolean readCommand(String[] words) {
+    /**
+     * Reads the operation code (first word in the command line) and runs the corresponding method.
+     * @param words array of Strings representing the command line input.
+     * @return false if the Gym Manager is terminated, true otherwise.
+     */
+    private boolean isReadCommand(String[] words) {
         switch (words[0]) {
             case "A": {
                 addMember(words);
@@ -80,6 +99,12 @@ public class GymManager {
         return true;
     }
 
+    /**
+     * Creates and adds new Member with values according to the command line input if valid.
+     * Sets the values of Member to match the input, checks if the Member is valid using the checkIfValid
+     * method, adds the member into MemberDatabase database, and then outputs the result.
+     * @param memberInfo array of Strings representing the information associated with the new Member.
+     */
     private void addMember(String[] memberInfo) {
         Member m = new Member();
         int count = 1;
@@ -112,6 +137,12 @@ public class GymManager {
         }
     }
 
+    /**
+     *
+     * @param m
+     * @param location
+     * @return
+     */
     private boolean checkIfValid(Member m, String location) {
         if (!m.isDobValid()) {
             System.out.println("DOB " + m.getDob().toString() + ": invalid calendar date!");
@@ -221,7 +252,7 @@ public class GymManager {
             System.out.println(fclass + " class does not exist.");
             return false;
         }
-        classConflict = fitnessData.checkTimeConflict(m, classType)
+        classConflict = fitnessData.checkTimeConflict(m, classType);
         if(classConflict != null) {
             System.out.println(classType.getClassName() + " time conflict -- " + m.getFname() + " " + m.getLname()
                     + " has already checked in " + classConflict.getClassName() + ".");
