@@ -28,13 +28,10 @@ public class GymManager {
     private boolean readCommand(String[] words) {
         switch (words[0]) {
             case "A": {
-                // Add member
                 addMember(words);
-                //System.out.println("hi");
                 break;
             }
             case "R": {
-                // Delete member
                 deleteMember(words);
                 break;
             }
@@ -55,18 +52,9 @@ public class GymManager {
                 break;
             }
             case "S": {
-                // Display fitness class schedule
                 break;
             }
             case "C": {
-                // Check in
-                // Do not allow check-in:
-                // the membership has expired
-                // the member does not exist
-                // the date of birth is invalid
-                // the fitness class does not exist
-                // there is a time conflict with other fitness classes
-                // the member has already checked in
                 break;
             }
             case "Q": {

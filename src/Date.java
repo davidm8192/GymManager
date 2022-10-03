@@ -26,14 +26,15 @@ public class Date implements Comparable<Date> {
     public static final int NOVEMBER = 11;
     public static final int DECEMBER = 12;
 
-
+    //create an object with today’s date (see Calendar class)
     public Date() {
         Calendar c = Calendar.getInstance();
         month = c.get(Calendar.MONTH) + 1;
         day = c.get(Calendar.DATE);
         year = c.get(Calendar.YEAR);
-    } //create an object with today’s date (see Calendar class)
+    }
 
+    //take “mm/dd/yyyy” and create a Date object
     public Date(String date) {
         int tempNum, count = 0;
         String temp = "";
@@ -62,7 +63,7 @@ public class Date implements Comparable<Date> {
             }
         }
 
-    } //take “mm/dd/yyyy” and create a Date object
+    }
 
     public int getYear() {
         return year;
@@ -101,25 +102,36 @@ public class Date implements Comparable<Date> {
 
         return 0;
     }
-    public boolean isValid() {
 
-        if (getDay() < MIN_DAY) return false;
-        if (getMonth() < JANUARY || getMonth() > DECEMBER) return false;
+    public boolean isValid() {
+        if (getDay() < MIN_DAY) {
+            return false;
+        }
+        if (getMonth() < JANUARY || getMonth() > DECEMBER) {
+            return false;
+        }
         if (getMonth() == APRIL || getMonth() == JUNE || getMonth() == SEPTEMBER || getMonth() == NOVEMBER) {
-            if (getDay() > THIRTY_DAY_MONTH) return false;
+            if (getDay() > THIRTY_DAY_MONTH) {
+                return false;
+            }
         }
         else if (getMonth() == FEBRUARY && !isLeapYear(getYear())) {
-            if (getDay() > FEBRUARY_NONLEAP) return false;
+            if (getDay() > FEBRUARY_NONLEAP) {
+                return false;
+            }
         }
         else if (getMonth() == FEBRUARY && isLeapYear(getYear())) {
-            if (getDay() > FEBRUARY_LEAP) return false;
+            if (getDay() > FEBRUARY_LEAP) {
+                return false;
+            }
         }
         else {
-            if (getDay() > THIRTY_ONE_DAY_MONTH) return false;
+            if (getDay() > THIRTY_ONE_DAY_MONTH) {
+                return false;
+            }
         }
         return true;
-
-    } //check if a date is a valid calendar date
+    }
 
     public boolean isLeapYear(int year) {
         if (year%QUADRENNIAL == 0) {

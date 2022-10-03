@@ -14,10 +14,16 @@ public enum Location {
         this.county = county;
     }
 
-    public String toString() { return this.name() + ", " + zipCode + ", " + county; }
+    public String toString() {
+        return this.name() + ", " + zipCode + ", " + county;
+    }
 
-    public String getZipCode() { return this.zipCode; }
+    public String getZipCode() {
+        return this.zipCode;
+    }
 
-    public String getCounty() { return this.county; }
+    public String getCounty() {
+        return this.county;
+    }
 
 }

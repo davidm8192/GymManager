@@ -9,9 +9,7 @@ public class MemberDatabase {
     public static final int NOT_FOUND = 4;
 
     public static final int SORT_BY_NAME = 0;
-
     public static final int SORT_BY_EXPIRATION = 1;
-
     public static final int SORT_BY_LOCATION = 2;
 
     public MemberDatabase() {
@@ -37,7 +35,6 @@ public class MemberDatabase {
     }
 
     public boolean add(Member member) {
-
         if (find(member) != NOT_FOUND) {
             return false;
         }
@@ -47,7 +44,6 @@ public class MemberDatabase {
 
         if (size == mlist.length) {
             grow();
-            return true;
         }
 
         return true;
@@ -78,6 +74,7 @@ public class MemberDatabase {
             System.out.println("Member database is empty!");
             return;
         }
+
         int sortType = SORT_BY_LOCATION;
         quickSort(0, size-1, sortType);
 
@@ -95,6 +92,7 @@ public class MemberDatabase {
             System.out.println("Member database is empty!");
             return;
         }
+
         int sortType = SORT_BY_EXPIRATION;
         quickSort(0, size-1, sortType);
 
@@ -112,6 +110,7 @@ public class MemberDatabase {
             System.out.println("Member database is empty!");
             return;
         }
+
         int sortType = SORT_BY_NAME;
         quickSort(0, size-1, sortType);
 
@@ -171,7 +170,7 @@ public class MemberDatabase {
     }
 
     public boolean isEmpty() {
-        if(size != 0) {
+        if (size != 0) {
             return false;
         }
         return true;
