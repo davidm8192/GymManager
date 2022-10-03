@@ -9,7 +9,7 @@ public class FitnessClass {
         cardio = new MemberDatabase();
     }
 
-    public void checkIn(Member m, String className) {
+    public boolean checkIn(Member m, String className) {
         switch(className.toUpperCase()) {
             case "PILATES":
                 pilates.add(m);
@@ -20,10 +20,14 @@ public class FitnessClass {
             case "CARDIO":
                 cardio.add(m);
                 break;
+            default:
+                return false;
         }
+        return true;
+        //Compare times to check for overlap between classes
     }
 
-    public void dropClass(Member m, String className) {
+    public boolean dropClass(Member m, String className) {
         switch(className.toUpperCase()) {
             case "PILATES":
                 pilates.remove(m);
@@ -34,7 +38,10 @@ public class FitnessClass {
             case "CARDIO":
                 cardio.remove(m);
                 break;
+            default:
+                return false;
         }
+        return true;
     }
 
     public void printSchedule() {
@@ -42,22 +49,23 @@ public class FitnessClass {
         System.out.println(FitnessClasses.PILATES.toString());
         if(!pilates.isEmpty()) {
             System.out.println("\t** participants **");
-            for (int i = 0; i < pilates.getSize(); i++) {
-                System.out.print;
-            }
+            pilates.print();
         }
 
         System.out.println(FitnessClasses.SPINNING.toString());
         if(!spinning.isEmpty()) {
             System.out.println("\t** participants **");
+            spinning.print();
         }
 
         System.out.println(FitnessClasses.CARDIO.toString());
         if(!cardio.isEmpty()) {
             System.out.println("\t** participants **");
+            cardio.print();
         }
-
     }
+
+
 
 
 

@@ -39,7 +39,7 @@ public class GymManager {
                 break;
             }
             case "P": {
-                database.print();
+                displayMembers();
                 break;
             }
             case "PC": {
@@ -99,25 +99,12 @@ public class GymManager {
 
         String location = memberInfo[count];
 
-        switch(location.toUpperCase()) {
-            case "BRIDGEWATER":
-                m.setLocation(Location.BRIDGEWATER);
-                break;
-            case "EDISON":
-                m.setLocation(Location.EDISON);
-                break;
-            case "FRANKLIN":
-                m.setLocation(Location.FRANKLIN);
-                break;
-            case "PISCATAWAY":
-                m.setLocation(Location.PISCATAWAY);
-                break;
-            case "SOMERVILLE":
-                m.setLocation(Location.SOMERVILLE);
-                break;
-            default:
-                break;
+        for(Location loc : Location.values()) {
+            if(location.toUpperCase().equals(loc.name())) {
+                m.setLocation(loc);
+            }
         }
+
         // Add member to database
         if(checkIfValid(m, location)) {
             if(!database.add(m)) {
@@ -177,21 +164,16 @@ public class GymManager {
         }
     }
 
-    private void displayMembers() {}
-
-    private void displayByCounty() {}
-
-    private void displayByName() {}
-
-    private void displayByDate() {}
+    private void displayMembers() {
+        if (database.isEmpty()) {
+            System.out.println("Member database is empty!");
+            return;
+        }
+        System.out.println("-list of members-");
+        database.print();
+        System.out.println("-end of list-");
+    }
 
     private void displayFitnessSched() {}
-
-    private void checkIn() {}
-
-    private void terminate() {}
-
-
-
 
 }

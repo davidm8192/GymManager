@@ -66,17 +66,11 @@ public class MemberDatabase {
     }
 
     public void print() {
-        if (isEmpty()) {
-            System.out.println("Member database is empty!");
-            return;
-        }
-        System.out.println("-list of members-");
         for (int i = 0; i < size; i++) {
             if (mlist[i] != null) {
                 System.out.println(mlist[i].toString());
             }
         }
-        System.out.println("-end of list-");
     } //print the array contents as is
 
     public void printByCounty() {
