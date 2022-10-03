@@ -98,6 +98,7 @@ public class GymManager {
         m.setExpire(expire);
 
         String location = memberInfo[count];
+
         switch(location.toUpperCase()) {
             case "BRIDGEWATER":
                 m.setLocation(Location.BRIDGEWATER);
@@ -127,8 +128,6 @@ public class GymManager {
             }
         }
     }
-
-
 
     private boolean checkIfValid(Member m, String location) {
         if (!m.isDobValid()) {

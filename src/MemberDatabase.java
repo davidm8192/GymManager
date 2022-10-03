@@ -176,7 +176,6 @@ public class MemberDatabase {
         mlist[second] = temp;
     }
 
-
     public boolean isEmpty() {
         if(size != 0) {
             return false;

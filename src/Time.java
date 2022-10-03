@@ -10,7 +10,7 @@ public enum Time {
         this.minute = minute;
     }
 
-    public static Time convertTime(String time) {
-        return Time.AFTERNOON;
+    public String toString() {
+        return hour + ": " + minute;
     }
 }
