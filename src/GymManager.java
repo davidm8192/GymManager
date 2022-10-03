@@ -58,12 +58,16 @@ public class GymManager {
                 break;
             }
             case "C": {
-
+                checkInMember(words);
                 break;
             }
             case "Q": {
                 System.out.println("Gym Manager terminated.");
                 return false;
+            }
+            case "D": {
+                dropClass(words);
+                break;
             }
             case "": {
                 break;
@@ -145,7 +149,7 @@ public class GymManager {
         m.setFname(memberInfo[count++]);
         m.setLname(memberInfo[count++]);
 
-        Date dob = new Date(memberInfo[count++]);
+        Date dob = new Date(memberInfo[count]);
         m.setDob(dob);
 
         if(!database.remove(m)) {
@@ -178,8 +182,15 @@ public class GymManager {
         Date dob = new Date(memberInfo[count]);
         m.setDob(dob);
 
-        validCheckIn(m, fclass);
-
+        if(validCheckIn(m, fclass)) {
+            if (!fitnessData.checkIn(m, fclass)) {
+                System.out.println(m.getFname() + " " + m.getLname() + " has already checked in "
+                        + fclass.substring(0,1).toUpperCase() + fclass.substring(1).toLowerCase() + ".");
+            } else {
+                System.out.println(m.getFname() + " " + m.getLname() + " checked in "
+                        + fclass.substring(0,1).toUpperCase() + fclass.substring(1).toLowerCase() + ".");
+            }
+        }
     }
 
     private boolean validCheckIn(Member m, String fclass) {
@@ -215,14 +226,55 @@ public class GymManager {
             System.out.println(classType.getClassName() + " time conflict -- " + m.getFname() + " " + m.getLname()
                     + " has already checked in " + classConflict.getClassName() + ".");
         }
-        if(!fitnessData.checkIn(m, fclass)) {
-            System.out.println(m.getFname() + " " + m.getLname() + " has already checked in " + classType.getClassName() + ".");
+        return true;
+    }
+    
+    private void dropClass(String[] memberInfo) {
+        Member m = new Member();
+        int count = 1;
+
+        String fclass = memberInfo[count++];
+
+        m.setFname(memberInfo[count++]);
+        m.setLname(memberInfo[count++]);
+
+        Date dob = new Date(memberInfo[count]);
+        m.setDob(dob);
+
+        if(validDropClass(m, fclass)) {
+            if(!fitnessData.drop(m, fclass)) {
+                System.out.println(m.getFname() + " " + m.getLname() + " is not a participant "
+                        + fclass.substring(0,1).toUpperCase() + fclass.substring(1).toLowerCase() + ".");
+            }
+            else {
+                System.out.println(m.getFname() + " " + m.getLname() + " dropped "
+                        + fclass.substring(0,1).toUpperCase() + fclass.substring(1).toLowerCase() + ".");
+            }
+
+        }
+    }
+
+    private boolean validDropClass(Member m, String fclass) {
+        Date today = new Date();
+        boolean classExists = false;
+        FitnessClasses classType = null;
+
+        if(!m.getDob().isValid()) {
+            System.out.println("DOB " + m.getDob() + ": invalid calendar date!");
             return false;
         }
-        else {
-            System.out.println(m.getFname() + " " + m.getLname() + " checked in " + classType.getClassName() + ".");
+        for(FitnessClasses classes : FitnessClasses.values()) {
+            if(fclass.toUpperCase().equals(classes.name())) {
+                classExists = true;
+                classType = classes;
+            }
+        }
+        if(!classExists) {
+            System.out.println(fclass + " class does not exist.");
+            return false;
         }
         return true;
     }
+
 
 }

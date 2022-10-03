@@ -38,24 +38,20 @@ public class FitnessClass {
                 return FitnessClasses.CARDIO;
             }
         }
-        return true;
+        return null;
     }
 
-    public boolean dropClass(Member m, String className) {
+    public boolean drop(Member m, String className) {
         switch(className.toUpperCase()) {
             case "PILATES":
-                pilates.remove(m);
-                break;
+                return pilates.remove(m);
             case "SPINNING":
-                spinning.remove(m);
-                break;
+                return spinning.remove(m);
             case "CARDIO":
-                cardio.remove(m);
-                break;
+                return cardio.remove(m);
             default:
                 return false;
         }
-        return true;
     }
 
     public void printSchedule() {
