@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class GymManager {
 
     private MemberDatabase database;
+    private FitnessClass fitnessData;
 
     public GymManager() {
         database = new MemberDatabase();
+        fitnessData = new FitnessClass();
     }
 
     public void run() {
@@ -52,9 +54,11 @@ public class GymManager {
                 break;
             }
             case "S": {
+                fitnessData.printSchedule();
                 break;
             }
             case "C": {
+
                 break;
             }
             case "Q": {
@@ -162,6 +166,63 @@ public class GymManager {
         System.out.println("-end of list-");
     }
 
-    private void displayFitnessSched() {}
+    private void checkInMember(String[] memberInfo) {
+        Member m = new Member();
+        int count = 1;
+
+        String fclass = memberInfo[count++];
+
+        m.setFname(memberInfo[count++]);
+        m.setLname(memberInfo[count++]);
+
+        Date dob = new Date(memberInfo[count]);
+        m.setDob(dob);
+
+        validCheckIn(m, fclass);
+
+    }
+
+    private boolean validCheckIn(Member m, String fclass) {
+        Date today = new Date();
+        boolean classExists = false;
+        FitnessClasses classType = null;
+        FitnessClasses classConflict = null;
+
+        if(!m.getDob().isValid()) {
+            System.out.println("DOB " + m.getDob() + ": invalid calendar date!");
+            return false;
+        }
+        if(!database.memberCheck(m)) {
+            System.out.println(m.getFname() + " " + m.getLname() + " " + m.getDob() + " is not in the database.");
+            return false;
+        }
+        if(m.getExpire().compareTo(today) < 0) {
+            System.out.println(m.getFname() + " " + m.getLname() + " " + m.getDob() + " membership expired.");
+            return false;
+        }
+        for(FitnessClasses classes : FitnessClasses.values()) {
+            if(fclass.toUpperCase().equals(classes.name())) {
+                classExists = true;
+                classType = classes;
+            }
+        }
+        if(!classExists) {
+            System.out.println(fclass + " class does not exist.");
+            return false;
+        }
+        classConflict = fitnessData.checkTimeConflict(m, classType)
+        if(classConflict != null) {
+            System.out.println(classType.getClassName() + " time conflict -- " + m.getFname() + " " + m.getLname()
+                    + " has already checked in " + classConflict.getClassName() + ".");
+        }
+        if(!fitnessData.checkIn(m, fclass)) {
+            System.out.println(m.getFname() + " " + m.getLname() + " has already checked in " + classType.getClassName() + ".");
+            return false;
+        }
+        else {
+            System.out.println(m.getFname() + " " + m.getLname() + " checked in " + classType.getClassName() + ".");
+        }
+        return true;
+    }
 
 }

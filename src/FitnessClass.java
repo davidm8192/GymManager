@@ -12,19 +12,33 @@ public class FitnessClass {
     public boolean checkIn(Member m, String className) {
         switch(className.toUpperCase()) {
             case "PILATES":
-                pilates.add(m);
-                break;
+                return pilates.add(m);
             case "SPINNING":
-                spinning.add(m);
-                break;
+                return spinning.add(m);
             case "CARDIO":
-                cardio.add(m);
-                break;
+                return cardio.add(m);
             default:
                 return false;
         }
+    }
+
+    public FitnessClasses checkTimeConflict(Member m, FitnessClasses fclass) {
+        if(fclass != FitnessClasses.PILATES && pilates.memberCheck(m)) {
+            if(fclass.getTime().equals(FitnessClasses.PILATES.getTime())) {
+                return FitnessClasses.PILATES;
+            }
+        }
+        if(fclass != FitnessClasses.SPINNING && spinning.memberCheck(m)) {
+            if(fclass.getTime().equals(FitnessClasses.SPINNING.getTime())) {
+                return FitnessClasses.SPINNING;
+            }
+        }
+        if(fclass != FitnessClasses.CARDIO && cardio.memberCheck(m)) {
+            if(fclass.getTime().equals(FitnessClasses.CARDIO.getTime())) {
+                return FitnessClasses.CARDIO;
+            }
+        }
         return true;
-        //Compare times to check for overlap between classes
     }
 
     public boolean dropClass(Member m, String className) {
@@ -64,10 +78,4 @@ public class FitnessClass {
             cardio.print();
         }
     }
-
-
-
-
-
-
 }

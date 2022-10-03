@@ -175,4 +175,14 @@ public class MemberDatabase {
         }
         return true;
     }
+
+    public boolean memberCheck(Member member) {
+        for (int i = 0; i < size; i++) {
+            if (member.equals(mlist[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
