@@ -155,9 +155,8 @@ public class Member implements Comparable<Member>{
     @Override
     public String toString() {
         String output = "";
-        Calendar c = Calendar.getInstance();
         output += fname + " " + lname + ", DOB: " + dob.toString() + ", ";
-        if (c.before(expire)) output += "Membership expired ";
+        if (expire.compareTo(new Date()) < 0) output += "Membership expired ";
         else output += "Membership expires ";
         output += expire.toString() + ", Location: " + location.toString();
         return output;
@@ -190,6 +189,26 @@ public class Member implements Comparable<Member>{
         }
         if(compareF < 0) {
             return -1; // current member's name is before
+        }
+
+        return 0; // names are the same
+    }
+
+    public int compareLocation(Member member) {
+        int compareCounty = this.getLocation().getCounty().compareTo(member.getLocation().getCounty());
+        int compareZipcode = this.getLocation().getZipCode().compareTo(member.getLocation().getZipCode());
+        if(compareCounty > 0) {
+            return 1; // current member's county is after
+        }
+        if(compareCounty < 0) {
+            return -1; // current member's county is before
+        }
+
+        if(compareZipcode > 0) {
+            return 1; // current member's zipcode is after
+        }
+        if(compareZipcode < 0) {
+            return -1; // current member's zipcode is before
         }
 
         return 0; // names are the same

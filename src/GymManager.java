@@ -43,15 +43,15 @@ public class GymManager {
                 break;
             }
             case "PC": {
-                // Display list of members ordered by county names, then zip codes if the locations are in the same county
+                database.printByCounty();
                 break;
             }
             case "PN": {
-               database.printByName();
+                database.printByName();
                 break;
             }
             case "PD": {
-                // Display list of members ordered by expiration dates; if same, order does not matter
+                database.printByExpirationDate();
                 break;
             }
             case "S": {

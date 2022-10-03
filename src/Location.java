@@ -1,9 +1,9 @@
 public enum Location {
-    BRIDGEWATER("08807", "Somerset County"),
-    EDISON("08837", "Middlesex County"),
-    FRANKLIN("08873", "Somerset County"),
-    PISCATAWAY("08854", "Middlesex County"),
-    SOMERVILLE("08876", "Somerset County");
+    BRIDGEWATER("08807", "SOMERSET"),
+    EDISON("08837", "MIDDLESEX"),
+    FRANKLIN("08873", "SOMERSET"),
+    PISCATAWAY("08854", "MIDDLESEX"),
+    SOMERVILLE("08876", "SOMERSET");
 
     private final String zipCode;
     private final String county;
@@ -19,4 +19,5 @@ public enum Location {
     public String getZipCode() { return this.zipCode; }
 
     public String getCounty() { return this.county; }
+
 }
