@@ -1,10 +1,12 @@
+package fitnesschainmanager;
+
 import java.util.Scanner;
 
 /**
- * User Interface class that processes command lines, calls the corresponding methods,
- * and runs member and fitnessClass methods.
- * Adds and delete members, checks if members are valid, checks members into fitness
- * classes, and checks if member check-ins are valid.
+ * Gym Manager Class is the User Interface class that processes command lines, calls the corresponding methods, and
+ * runs member and fitnessClass methods.
+ * Adds and delete members, checks if members are valid, checks members into fitness classes, and checks if member
+ * check-ins are valid.
  * @author David Ma, Ethan Kwok
  */
 public class GymManager {
@@ -101,8 +103,8 @@ public class GymManager {
 
     /**
      * Creates and adds new Member with values according to the command line input if valid.
-     * Sets the values of Member to match the input, checks if the Member is valid using the checkIfValid
-     * method, adds the member into MemberDatabase database, and then outputs the result.
+     * Sets the values of Member to match the input, checks if the Member is valid using the checkIfValid method,
+     * adds the member into MemberDatabase database, and then outputs the result.
      * @param memberInfo array of Strings representing the information associated with the new Member.
      */
     private void addMember(String[] memberInfo) {
@@ -138,10 +140,12 @@ public class GymManager {
     }
 
     /**
-     *
-     * @param m
-     * @param location
-     * @return
+     * Checks if a Member fulfills the requirements to be valid.
+     * Checks to make sure the date of birth and expiration date are valid calendar dates, the DoB is not today or
+     * a future date, the Member is above 18 years of age, and the location is valid.
+     * @param m the new Member whose validity is being checked.
+     * @param location the location of the new Member's gym.
+     * @return true if the member is valid, false if the member is not valid.
      */
     private boolean checkIfValid(Member m, String location) {
         if (!m.isDobValid()) {
@@ -172,7 +176,13 @@ public class GymManager {
         return true;
     }
 
-
+    /**
+     * Checks if a Member can be deleted from a database and, if so, calls the remove() method in MemberDatabase
+     * to delete them.
+     * Outputs whether the member has been removed.
+     * @param memberInfo array of Strings representing the Member's first name, last name, and date of birth as given
+     *                   from the command line input.
+     */
     private void deleteMember(String[] memberInfo) {
         Member m = new Member();
         int count = 1;
@@ -191,6 +201,10 @@ public class GymManager {
         }
     }
 
+    /**
+     * Checks if the Member database is empty and, if not, runs the unsorted print() method.
+     * If the database is empty, the output prints that the database is empty.
+     */
     private void displayMembers() {
         if (database.isEmpty()) {
             System.out.println("Member database is empty!");
@@ -201,6 +215,13 @@ public class GymManager {
         System.out.println("-end of list-");
     }
 
+    /**
+     * Checks if a Member can be checked into the class they specify by calling validCheckIn(), and, if so, calls the
+     * checkIn() method in FitnessClass to add them to the class database.
+     * Outputs whether the Member has checked in.
+     * @param memberInfo array of Strings representing the name of the fitness class the Member want to check into,
+     *                   the Member's first name, last name, and date of birth as given from the command line input.
+     */
     private void checkInMember(String[] memberInfo) {
         Member m = new Member();
         int count = 1;
@@ -214,7 +235,7 @@ public class GymManager {
         m.setDob(dob);
 
         if(validCheckIn(m, fclass)) {
-            if (!fitnessData.checkIn(m, fclass)) {
+            if (!fitnessData.checkIn(database.getMember(m), fclass)) {
                 System.out.println(m.getFname() + " " + m.getLname() + " has already checked in "
                         + fclass.substring(0,1).toUpperCase() + fclass.substring(1).toLowerCase() + ".");
             } else {
@@ -224,6 +245,16 @@ public class GymManager {
         }
     }
 
+    /**
+     * Checks if Member is able to check into the fitness class.
+     * Checks if the Member's date of birth is valid, if Member exists in the Member Database, if Member's expiration
+     * date has not passed, if the specified class exists, and if there exists a class conflict by calling
+     * checkTimeConflict() from FitnessClass.
+     * Prints reason for Member being unable to check in if they do not satisfy all the conditions.
+     * @param m the Member to be checked in.
+     * @param fclass the name of the inputted fitness class the Member wants to check into.
+     * @return true if Member meets all the conditions to be checked in, false if not
+     */
     private boolean validCheckIn(Member m, String fclass) {
         Date today = new Date();
         boolean classExists = false;
@@ -234,11 +265,11 @@ public class GymManager {
             System.out.println("DOB " + m.getDob() + ": invalid calendar date!");
             return false;
         }
-        if(!database.memberCheck(m)) {
+        if(database.getMember(m) == null) {
             System.out.println(m.getFname() + " " + m.getLname() + " " + m.getDob() + " is not in the database.");
             return false;
         }
-        if(m.getExpire().compareTo(today) < 0) {
+        if(database.getMember(m).getExpire().compareTo(today) < 0) {
             System.out.println(m.getFname() + " " + m.getLname() + " " + m.getDob() + " membership expired.");
             return false;
         }
@@ -256,10 +287,18 @@ public class GymManager {
         if(classConflict != null) {
             System.out.println(classType.getClassName() + " time conflict -- " + m.getFname() + " " + m.getLname()
                     + " has already checked in " + classConflict.getClassName() + ".");
+            return false;
         }
         return true;
     }
-    
+
+    /**
+     * Checks if a Member can drop the class they specify by calling validDropClass(), and, if so, calls the
+     * drop() method from FitnessClass to remove the Member from the class database.
+     * Outputs whether the member has dropped the class.
+     * @param memberInfo array of Strings representing the name of the fitness class the Member want to drop,
+     *                   the Member's first name, last name, and date of birth as given from the command line input.
+     */
     private void dropClass(String[] memberInfo) {
         Member m = new Member();
         int count = 1;
@@ -274,7 +313,7 @@ public class GymManager {
 
         if(validDropClass(m, fclass)) {
             if(!fitnessData.drop(m, fclass)) {
-                System.out.println(m.getFname() + " " + m.getLname() + " is not a participant "
+                System.out.println(m.getFname() + " " + m.getLname() + " is not a participant in "
                         + fclass.substring(0,1).toUpperCase() + fclass.substring(1).toLowerCase() + ".");
             }
             else {
@@ -285,6 +324,14 @@ public class GymManager {
         }
     }
 
+    /**
+     * Checks if Member is able to drop the fitness class.
+     * Checks if the Member's date of birth is valid and if the specified class exists.
+     * Prints reason for Member being unable to drop the class if they do not satisfy all the conditions.
+     * @param m the Member to be removed from the class.
+     * @param fclass the name of the inputted fitness class the Member wants to drop.
+     * @return true if Member meets all the conditions to drop the class, false if not
+     */
     private boolean validDropClass(Member m, String fclass) {
         Date today = new Date();
         boolean classExists = false;
@@ -306,6 +353,5 @@ public class GymManager {
         }
         return true;
     }
-
 
 }

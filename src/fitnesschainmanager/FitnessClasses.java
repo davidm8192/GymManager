@@ -1,3 +1,5 @@
+package fitnesschainmanager;
+
 public enum FitnessClasses {
 
     PILATES("Jennifer", Time.MORNING),

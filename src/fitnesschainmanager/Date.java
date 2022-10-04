@@ -1,5 +1,12 @@
+package fitnesschainmanager;
 import java.util.Calendar;
 
+/**
+ * Date Class holds data used for Date objects and returns the data and information comparing the data.
+ * The data stored is a Date's year, month, and day. All information can be changed and retrieved with getter and
+ * setter methods. The validity of these Dates can be checked, as well as if the year is a leap year.
+ * @author David Ma, Ethan Kwok
+ */
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
@@ -26,7 +33,9 @@ public class Date implements Comparable<Date> {
     public static final int NOVEMBER = 11;
     public static final int DECEMBER = 12;
 
-    //create an object with today’s date (see Calendar class)
+    /**
+     * Create a Date object with today's date as the data.
+     */
     public Date() {
         Calendar c = Calendar.getInstance();
         month = c.get(Calendar.MONTH) + 1;
@@ -34,7 +43,10 @@ public class Date implements Comparable<Date> {
         year = c.get(Calendar.YEAR);
     }
 
-    //take “mm/dd/yyyy” and create a Date object
+    /**
+     * Creates a Date object with month, day, and year given by the parameter input.
+     * @param date String in the format "mm/dd/yyyy" to represent the month, date, and year.
+     */
     public Date(String date) {
         int tempNum, count = 0;
         String temp = "";
@@ -65,18 +77,35 @@ public class Date implements Comparable<Date> {
 
     }
 
+    /**
+     * Gets the year of the Date.
+     * @return the year of the Date.
+     */
     public int getYear() {
         return year;
     }
 
+    /**
+     * Gets the month of the Date.
+     * @return the month of the Date.
+     */
     public int getMonth() {
         return month;
     }
 
+    /**
+     * Gets the day of the Date.
+     * @return the day of the Date
+     */
     public int getDay() {
         return day;
     }
 
+    /**
+     * Compares 2 dates by which one comes/came before the other.
+     * @param date the object to be compared (as opposed to the current Date).
+     * @return 0 if the dates are the same. 1 if the parameter date comes/came before on the calendar. -1 otherwise.
+     */
     @Override
     public int compareTo(Date date) {
         if(this.year > date.getYear()) {
@@ -103,6 +132,14 @@ public class Date implements Comparable<Date> {
         return 0;
     }
 
+    /**
+     * Checks if a given Date is a valid calendar date.
+     * The month cannot be before January or after December (i.e. less than 1 or greater than 12 respectively).
+     * The day cannot be less than 1. On 30 day months, the day cannot be greater than 30, and on 31 day months, the
+     * day cannot be greater than 31. For February, the day cannot be greater than 28 on non-leap years or greater
+     * than 29 on leap years.
+     * @return true if the date is valid, false if the date is invalid.
+     */
     public boolean isValid() {
         if (getDay() < MIN_DAY) {
             return false;
@@ -133,6 +170,12 @@ public class Date implements Comparable<Date> {
         return true;
     }
 
+    /**
+     * Checks if the given year is a leap year or not.
+     * Leap years are every year divisible by four but not divisible by 100 unless it is also divisible by 400.
+     * @param year the year of the Date.
+     * @return true if the year is a leap year, false if not.
+     */
     public boolean isLeapYear(int year) {
         if (year%QUADRENNIAL == 0) {
             if (year%CENTENNIAL == 0 && year%QUATERCENTENNIAL == 0) {
@@ -146,10 +189,18 @@ public class Date implements Comparable<Date> {
         return false;
     }
 
+    /**
+     * Converts the Date to a String.
+     * @return the Date as a String with format "mm/dd/yyyy".
+     */
     public String toString() {
         return month + "/" + day + "/" + year;
     }
 
+    /**
+     * Testbed main method to test the compareTo() method.
+     * @param args necessary, unused parameter in main method.
+     */
     public static void main(String[] args) {
         //test case 1
         Date testcase1 = new Date("2/29/2003");
