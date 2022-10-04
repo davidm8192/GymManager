@@ -26,8 +26,8 @@ public class MemberDatabase {
     }
 
     /**
-     * Finds the array index of a specified member
-     * @param member the Member to be searched for
+     * Finds the array index of a specified member.
+     * @param member the Member to be searched for.
      * @return the index of the Member if they are in the database, or NOT_FOUND = -1 if they are not.
      */
     private int find(Member member) {

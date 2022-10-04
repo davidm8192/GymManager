@@ -13,9 +13,9 @@ public enum Time {
     private final int minute;
 
     /**
-     * Creates a Time object
-     * @param hour of the specified time
-     * @param minute of the specified time
+     * Creates a Time object.
+     * @param hour of the specified time.
+     * @param minute of the specified time.
      */
     Time (int hour, int minute) {
         this.hour = hour;
@@ -23,9 +23,9 @@ public enum Time {
     }
 
     /**
-     * Converts the Time object into a string
+     * Converts the Time object into a string.
      * Digital time format; if the minute of the time is 0, it will be formatted as 00 instead of 0.
-     * @return String formatted as hour:minute
+     * @return String formatted as hour:minute.
      */
     public String toString() {
         if(minute == 0) {

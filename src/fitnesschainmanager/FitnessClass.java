@@ -1,8 +1,8 @@
 package fitnesschainmanager;
 
 /**
- * FitnessClass holds the member databases for all the classes offered by the gym
- * Classes are modified through a member check in and drop method
+ * FitnessClass holds the member databases for all the classes offered by the gym.
+ * Classes are modified through a member check in and drop method.
  * @author David Ma, Ethan Kwok
  */
 public class FitnessClass {

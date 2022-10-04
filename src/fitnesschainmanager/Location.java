@@ -16,9 +16,9 @@ public enum Location {
     private final String county;
 
     /**
-     * Creates a Location object
-     * @param zipCode a string of the numerical digits of the gym location's zipcode
-     * @param county a string of the gym location's county's name
+     * Creates a Location object.
+     * @param zipCode a string of the numerical digits of the gym location's zipcode.
+     * @param county a string of the gym location's county's name.
      */
     Location(String zipCode, String county) {
         this.zipCode = zipCode;
@@ -26,24 +26,24 @@ public enum Location {
     }
 
     /**
-     * Converts the Location object to a string
-     * @return String containing the name, zipcode, and county of the location
+     * Converts the Location object to a string.
+     * @return String containing the name, zipcode, and county of the location.
      */
     public String toString() {
         return this.name() + ", " + zipCode + ", " + county;
     }
 
     /**
-     * Getter method for the zipcode of Location
-     * @return zipcode of the gym's location
+     * Getter method for the zipcode of Location.
+     * @return zipcode of the gym's location.
      */
     public String getZipCode() {
         return this.zipCode;
     }
 
     /**
-     * Getter method for the county of Location
-     * @return county of the gym's location
+     * Getter method for the county of Location.
+     * @return county of the gym's location.
      */
     public String getCounty() {
         return this.county;
