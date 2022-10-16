@@ -14,14 +14,18 @@ import java.io.FileNotFoundException;
 public class GymManager {
 
     private MemberDatabase database;
-    private FitnessClass fitnessData;
+    private ClassSchedule schedule;
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+    public final static int FAMILY_DEFAULT_GUEST_PASS = 1;
+    public final static int PREMIUM_DEFAULT_GUEST_PASS = 3;
 
     /**
-     * Creates a database and fitnessData object.
+     * Creates a MemberDatabase and ClassSchedule object.
      */
     public GymManager() {
         database = new MemberDatabase();
-        fitnessData = new FitnessClass();
+        schedule = new ClassSchedule();
     }
 
     /**
@@ -77,7 +81,7 @@ public class GymManager {
                 break;
             }
             case "S": {
-                fitnessData.printSchedule();
+                schedule.printSchedule();
                 break;
             }
             case "C": {
@@ -440,7 +444,7 @@ public class GymManager {
             System.out.println(fclass + " class does not exist.");
             return false;
         }
-        classConflict = fitnessData.checkTimeConflict(m, classType);
+        classConflict = checkTimeConflict(m, classType);
         if(classConflict != null) {
             System.out.println(classType.getClassName() + " time conflict -- " + m.getFname() + " " + m.getLname()
                     + " has already checked in " + classConflict.getClassName() + ".");
@@ -448,6 +452,22 @@ public class GymManager {
         }
         return true;
     }
+
+    private FitnessClasses checkTimeConflict(Member m, FitnessClass classType) {
+        Time time = classType.getTime();
+
+        for(int i = 0; i < schedule.getNumClasses(); i++) {
+            FitnessClass fitClass = schedule.getFitnessClass(i);
+            for(int j = 0; j < fitClass.getLength(); j++) {
+                if(!classType.equals(fitClass) && time.equals(fitClass.getTime()) {
+                    return fitClass.getClassName();
+                }
+            }
+        }
+
+        return null;
+    }
+
 
     /**
      * Checks if a Member can drop the class they specify by calling validDropClass(), and, if so, calls the
@@ -514,20 +534,41 @@ public class GymManager {
     private void readFitnessSched(String filename) {
         try {
             File file = new File(filename);
+            //int lines = getLineNumbers(file);
+
             Scanner sc = new Scanner(file);
             String line = "";
+
 
             while(sc.hasNextLine()) {
                 line = sc.nextLine();
                 String[] words = line.split(" ");
+
                 //something fitness class related
             }
+            
+            sc.close(); 
 
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    /*private int getLineNumbers(File file) {
+        try {
+            int lines = 0;
+            Scanner sc = new Scanner(file);
+            while (sc.nextLine() != null) {
+                lines++;
+            }
+            return lines;
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }*/
 
     private void readMemberList(String filename) {
         try {
@@ -544,6 +585,7 @@ public class GymManager {
             }
 
             //database.print();
+            sc.close(); 
             System.out.println("-end of list-");
         }
         catch (FileNotFoundException e) {

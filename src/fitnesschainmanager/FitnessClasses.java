@@ -7,9 +7,9 @@ package fitnesschainmanager;
  */
 public enum FitnessClasses {
 
-    PILATES("Jennifer", Time.MORNING),
-    SPINNING("Denise", Time.AFTERNOON),
-    CARDIO("Kim", Time.AFTERNOON);
+    PILATES,
+    SPINNING,
+    CARDIO;
 
     private String instructorName;
     private Time time;
