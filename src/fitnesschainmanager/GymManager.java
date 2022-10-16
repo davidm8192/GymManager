@@ -1,6 +1,8 @@
 package fitnesschainmanager;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Gym Manager Class is the User Interface class that processes command lines, calls the corresponding methods, and
@@ -34,7 +36,7 @@ public class GymManager {
 
         while (run) {
             line = sc.nextLine();
-            String[] words = line.split(" ");
+            String[] words = line.split("\\s+");
             run = isReadCommand(words);
 
         }
@@ -88,6 +90,14 @@ public class GymManager {
             }
             case "D": {
                 dropClass(words);
+                break;
+            }
+            case "LS": {
+                readFitnessSched("classSchedule.txt");
+                break;
+            }
+            case "LM": {
+                readMemberList("memberList.txt");
                 break;
             }
             case "": {
@@ -353,5 +363,46 @@ public class GymManager {
         }
         return true;
     }
+    
+    private void readFitnessSched(String filename) {
+        try {
+            File file = new File(filename);
+            Scanner sc = new Scanner(file);
+            String line = "";
+
+            while(sc.hasNextLine()) {
+                line = sc.nextLine();
+                String[] words = line.split(" ");
+                //something fitness class related
+            }
+
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readMemberList(String filename) {
+        try {
+            File file = new File(filename);
+            Scanner sc = new Scanner(file);
+            String line = "";
+
+            System.out.println("-list of members loaded-");
+
+            while(sc.hasNextLine()) {
+                line = sc.nextLine();
+                String[] words = line.split("\\s+");
+                addMemberFromFile(words);
+            }
+
+            //database.print();
+            System.out.println("-end of list-");
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

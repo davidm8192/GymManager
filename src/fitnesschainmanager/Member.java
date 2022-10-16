@@ -7,7 +7,7 @@ package fitnesschainmanager;
  * names and locations can be compared for sorting purposes.
  * @author David Ma, Ethan Kwok
  */
-public class Member implements Comparable<Member>{
+public class Member implements Comparable<Member> {
     private String fname;
     private String lname;
     private Date dob;
@@ -34,7 +34,7 @@ public class Member implements Comparable<Member>{
      * @param expire Date object representing the membership expiration date of the Member.
      * @param location Location of the Member's gym.
      */
-    public Member(String fname, String lname, Date dob, Date expire, Location location) {
+        public Member(String fname, String lname, Date dob, Date expire, Location location) {
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
