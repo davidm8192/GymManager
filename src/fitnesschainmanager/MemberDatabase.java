@@ -40,6 +40,14 @@ public class MemberDatabase {
     }
 
     /**
+     * Getter method for the size of the memberDatabase.
+     * @return the size of the memberDatabase
+     */
+    public int getSize() {
+        return this.size;
+    }
+
+    /**
      * Increases the size of the mlist array by GROWTH_RATE = 4 when the size is equal to the current mlist.length.
      * This ensures that there is always space in the database array for new Members. The size is increased by
      * creating a new array and copying the values into the new array.
@@ -250,5 +258,17 @@ public class MemberDatabase {
         }
         return null;
     }
+
+    /**
+     * Getter method to return the Member in the database.
+     * @param index index of the Member in the member database.
+     * @return the Member if they exist at the mlist[index], null if there is no member there.
+     */
+    public Member getMember(int index) {
+        if (index >= size || index < 0) return null;
+        return mlist[index];
+    }
+    
+    
 
 }

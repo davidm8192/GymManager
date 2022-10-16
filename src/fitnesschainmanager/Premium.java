@@ -11,7 +11,7 @@ public class Premium extends Family {
 
     @Override
     public double membershipFee() {
-        return MembershipFees.PREMIUM_LENGTH.getValue()
-                * MembershipFees.FAMILY_MONTHLY_FEE.getValue();
+        return MembershipFees.PREMIUM_LENGTH.getValue() * MembershipFees.FAMILY_MONTHLY_FEE.getValue() -
+                MembershipFees.FAMILY_MONTHLY_FEE.getValue(); //1 free month
     }
 }

@@ -56,8 +56,16 @@ public class GymManager {
      */
     private boolean isReadCommand(String[] words) {
         switch (words[0]) {
-            case "A", "AF", "AP": {
-                //addMember(words);
+            case "A": {
+                addStandardMember(words);
+                break;
+            }
+            case "AF": {
+                addFamilyMember(words);
+                break;
+            }
+            case "AP": {
+                addPremiumMember(words);
                 break;
             }
             case "R": {
@@ -102,6 +110,10 @@ public class GymManager {
             }
             case "LM": {
                 readMemberList("memberList.txt");
+                break;
+            }
+            case "PF": {
+                printMembershipFees();
                 break;
             }
             case "": {
@@ -590,6 +602,22 @@ public class GymManager {
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private void printMembershipFees() {
+        for (int i = 0; i < database.getSize(); i++) {
+            System.out.print(database.getMember(i).toString());
+
+            if (database.getMember(i).membershipType().equals("Family")) {
+                System.out.print(", (Family) guest-pass remaining: " + database.getMember(i).getNumGuestPass());
+            }
+            if (database.getMember(i).membershipType().equals("Premium")) {
+                System.out.print(", (Premium) guest-pass remaining: " + database.getMember(i).getNumGuestPass());
+            }
+
+            System.out.println(", Membership fee: $" + df.format(database.getMember(i).membershipFee()));
         }
     }
 
