@@ -291,6 +291,11 @@ public class Member implements Comparable<Member> {
         return 0; // names are the same
     }
 
+    public double membershipFee() {
+        return MembershipFees.ONE_TIME_FEE.getValue() + MembershipFees.STANDARD_LENGTH.getValue()
+                * MembershipFees.STANDARD_MONTHLY_FEE.getValue();
+    }
+
     /**
      * Testbed main method to test the compareTo() method.
      * @param args necessary, unused parameter in main method.

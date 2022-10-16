@@ -52,8 +52,8 @@ public class GymManager {
      */
     private boolean isReadCommand(String[] words) {
         switch (words[0]) {
-            case "A": {
-                addMember(words);
+            case "A", "AF", "AP": {
+                //addMember(words);
                 break;
             }
             case "R": {
@@ -117,9 +117,11 @@ public class GymManager {
      * adds the member into MemberDatabase database, and then outputs the result.
      * @param memberInfo array of Strings representing the information associated with the new Member.
      */
-    private void addMember(String[] memberInfo) {
+/*    private void addMember(String[] memberInfo) {
         Member m = new Member();
-        int count = 1;
+        int count = 0;
+
+        String command = memberInfo[count++];
 
         m.setFname(memberInfo[count++]);
         m.setLname(memberInfo[count++]);
@@ -127,10 +129,55 @@ public class GymManager {
         Date dob = new Date(memberInfo[count++]);
         m.setDob(dob);
 
-        Date expire = new Date(memberInfo[count++]);
-        m.setExpire(expire);
+        if (command.equals("A") || command.equals("AF")) {
+            Date expire = new Date();
+            expire.addMonths((int) MembershipFees.STANDARD_LENGTH.getValue());
+            m.setExpire(expire);
+        }
+        else if (command.equals("AP")) {
+            Date expire = new Date();
+            expire.addMonths((int) MembershipFees.PREMIUM_LENGTH.getValue());
+            m.setExpire(expire);
+        }
+        else { //case for LM when reading from memberList.txt
+            Date expire = new Date(memberInfo[count++]);
+            m.setExpire(expire);
+        }
 
         String location = memberInfo[count];
+
+        for(Location loc : Location.values()) {
+            if(location.toUpperCase().equals(loc.name())) {
+                m.setLocation(loc);
+            }
+        }
+
+        // Add member to database
+        if(checkIfValid(m, location)) {
+            if(!database.add(m)) {
+                if (!command.equals("LM")) System.out.println(m.getFname() + " " + m.getLname() + " is already in the database.");
+            }
+            else {
+                if (!command.equals("LM")) System.out.println(m.getFname() + " " + m.getLname() + " added.");
+            }
+        }
+    }*/
+
+    private void addStandardMember(String[] memberInfo) {
+        Member m = new Member();
+        int count = 0;
+
+        m.setFname(memberInfo[++count]);
+        m.setLname(memberInfo[++count]);
+
+        Date dob = new Date(memberInfo[++count]);
+        m.setDob(dob);
+
+        Date expire = new Date();
+        expire.addMonths((int) MembershipFees.STANDARD_LENGTH.getValue());
+        m.setExpire(expire);
+
+        String location = memberInfo[++count];
 
         for(Location loc : Location.values()) {
             if(location.toUpperCase().equals(loc.name())) {
@@ -148,6 +195,106 @@ public class GymManager {
             }
         }
     }
+
+
+    private void addFamilyMember(String[] memberInfo) {
+        Member m = new Family();
+        int count = 0;
+
+        m.setFname(memberInfo[++count]);
+        m.setLname(memberInfo[++count]);
+
+        Date dob = new Date(memberInfo[++count]);
+        m.setDob(dob);
+
+        Date expire = new Date();
+        expire.addMonths((int) MembershipFees.FAMILY_LENGTH.getValue());
+        m.setExpire(expire);
+
+        String location = memberInfo[++count];
+
+        for(Location loc : Location.values()) {
+            if(location.toUpperCase().equals(loc.name())) {
+                m.setLocation(loc);
+            }
+        }
+
+        // Add member to database
+        if(checkIfValid(m, location)) {
+            if(!database.add(m)) {
+                System.out.println(m.getFname() + " " + m.getLname() + " is already in the database.");
+            }
+            else {
+                System.out.println(m.getFname() + " " + m.getLname() + " added.");
+            }
+        }
+    }
+
+
+    private void addPremiumMember(String[] memberInfo) {
+        Member m = new Premium();
+        int count = 0;
+
+        m.setFname(memberInfo[++count]);
+        m.setLname(memberInfo[++count]);
+
+        Date dob = new Date(memberInfo[++count]);
+        m.setDob(dob);
+
+        Date expire = new Date();
+        expire.addMonths((int) MembershipFees.PREMIUM_LENGTH.getValue());
+        m.setExpire(expire);
+
+        String location = memberInfo[++count];
+
+        for(Location loc : Location.values()) {
+            if(location.toUpperCase().equals(loc.name())) {
+                m.setLocation(loc);
+            }
+        }
+
+        // Add member to database
+        if(checkIfValid(m, location)) {
+            if(!database.add(m)) {
+                System.out.println(m.getFname() + " " + m.getLname() + " is already in the database.");
+            }
+            else {
+                System.out.println(m.getFname() + " " + m.getLname() + " added.");
+            }
+        }
+    }
+
+
+    private void addMemberFromFile(String[] memberInfo) {
+        Member m = new Member();
+        int count = 0;
+
+        m.setFname(memberInfo[count++]);
+        m.setLname(memberInfo[count++]);
+
+        Date dob = new Date(memberInfo[count++]);
+        m.setDob(dob);
+
+
+        Date expire = new Date(memberInfo[count++]);
+        m.setExpire(expire);
+
+        String location = memberInfo[count];
+
+        for(Location loc : Location.values()) {
+            if(location.toUpperCase().equals(loc.name())) {
+                m.setLocation(loc);
+            }
+        }
+
+        // Add member to database
+        if(checkIfValid(m, location)) {
+            if (database.add(m)) {
+                System.out.println(m.toString());
+            }
+        }
+    }
+
 
     /**
      * Checks if a Member fulfills the requirements to be valid.

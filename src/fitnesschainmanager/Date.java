@@ -132,6 +132,14 @@ public class Date implements Comparable<Date> {
         return 0;
     }
 
+    public void addMonths(int numMonths) {
+        this.month += numMonths;
+        while (this.month > 12) {
+            this.month -= 12;
+            this.year++;
+        }
+    }
+
     /**
      * Checks if a given Date is a valid calendar date.
      * The month cannot be before January or after December (i.e. less than 1 or greater than 12 respectively).
