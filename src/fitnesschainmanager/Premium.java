@@ -10,8 +10,18 @@ public class Premium extends Family {
     }
 
     @Override
+    public int getNumGuestPass() {
+        return super.getNumGuestPass();
+    }
+
+    @Override
     public double membershipFee() {
         return MembershipFees.PREMIUM_LENGTH.getValue() * MembershipFees.FAMILY_MONTHLY_FEE.getValue() -
                 MembershipFees.FAMILY_MONTHLY_FEE.getValue(); //1 free month
+    }
+
+    @Override
+    public String membershipType() {
+        return "Premium";
     }
 }

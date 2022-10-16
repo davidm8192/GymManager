@@ -17,9 +17,23 @@ public class Family extends Member {
         this.numGuestPass = numGuestPass;
     }
 
+    public void addNumGuestPass(int numGuestPass) {
+        this.numGuestPass += numGuestPass;
+    }
+
+    @Override
+    public int getNumGuestPass() {
+        return this.numGuestPass;
+    }
+
     @Override
     public double membershipFee() {
         return MembershipFees.ONE_TIME_FEE.getValue() + MembershipFees.STANDARD_LENGTH.getValue()
                 * MembershipFees.FAMILY_MONTHLY_FEE.getValue();
+    }
+    
+    @Override
+    public String membershipType() {
+        return "Family";
     }
 }

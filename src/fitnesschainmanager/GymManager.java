@@ -3,6 +3,7 @@ package fitnesschainmanager;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 
 /**
  * Gym Manager Class is the User Interface class that processes command lines, calls the corresponding methods, and
@@ -214,7 +215,7 @@ public class GymManager {
 
 
     private void addFamilyMember(String[] memberInfo) {
-        Member m = new Family();
+        Family m = new Family();
         int count = 0;
 
         m.setFname(memberInfo[++count]);
@@ -235,6 +236,8 @@ public class GymManager {
             }
         }
 
+        m.setNumGuestPass(FAMILY_DEFAULT_GUEST_PASS);
+
         // Add member to database
         if(checkIfValid(m, location)) {
             if(!database.add(m)) {
@@ -248,7 +251,7 @@ public class GymManager {
 
 
     private void addPremiumMember(String[] memberInfo) {
-        Member m = new Premium();
+        Premium m = new Premium();
         int count = 0;
 
         m.setFname(memberInfo[++count]);
@@ -268,6 +271,8 @@ public class GymManager {
                 m.setLocation(loc);
             }
         }
+
+        m.setNumGuestPass(PREMIUM_DEFAULT_GUEST_PASS);
 
         // Add member to database
         if(checkIfValid(m, location)) {
@@ -290,7 +295,6 @@ public class GymManager {
 
         Date dob = new Date(memberInfo[count++]);
         m.setDob(dob);
-
 
         Date expire = new Date(memberInfo[count++]);
         m.setExpire(expire);

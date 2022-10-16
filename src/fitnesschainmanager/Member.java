@@ -296,6 +296,14 @@ public class Member implements Comparable<Member> {
                 * MembershipFees.STANDARD_MONTHLY_FEE.getValue();
     }
 
+    public String membershipType() {
+        return "Standard";
+    }
+
+    public int getNumGuestPass() {
+        return 0; //Standard memberships get 0 guest passes
+    }
+
     /**
      * Testbed main method to test the compareTo() method.
      * @param args necessary, unused parameter in main method.

@@ -206,7 +206,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Testbed main method to test the compareTo() method.
+     * Testbed main method to test the isValid() method.
      * @param args necessary, unused parameter in main method.
      */
     public static void main(String[] args) {
