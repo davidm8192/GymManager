@@ -365,9 +365,9 @@ public class GymManager {
 
     /**
      * Checks if a Member can be checked into the class they specify by calling validCheckIn(), and, if so, calls the
-     * checkIn() method in FitnessClass to add them to the class database.
+     * checkIn() method in FitnessClass to add them to the class.
      * Outputs whether the Member has checked in.
-     * @param memberInfo array of Strings representing the name of the fitness class the Member want to check into,
+     * @param memberInfo array of Strings representing the fitness class the Member want to check into,
      *                   the Member's first name, last name, and date of birth as given from the command line input.
      */
     private void checkInMember(String[] memberInfo) {
@@ -394,16 +394,20 @@ public class GymManager {
     }
 
     /**
-     * Checks if Member is able to check into the fitness class.
-     * Checks if the Member's date of birth is valid, if Member exists in the Member Database, if Member's expiration
-     * date has not passed, if the specified class exists, and if there exists a class conflict by calling
-     * checkTimeConflict() from FitnessClass.
-     * Prints reason for Member being unable to check in if they do not satisfy all the conditions.
-     * @param m the Member to be checked in.
-     * @param fclass the name of the inputted fitness class the Member wants to check into.
-     * @return true if Member meets all the conditions to be checked in, false if not
+     * Checks if a Member is able to check into a given fitness class. Specifically, it checks the conditions in the
+     * validConditions() method, then checks if the class is at the same location as the membership, if the membership
+     * has not expired, and if the class time does not conflict with another. If there is an issue with validity,
+     * the reasoning is printed.
+     * @param m Member object representing the Member to be checked.
+     * @param className String representing the name of the fitness class.
+     * @param instructorName String representing the name of the fitness class's instructor.
+     * @param locationName String representing the location of the fitness class.
+     * @param fitClass FitnessClass object representing the Fitness Class data.
+     * @return false if the member or class is invalid or does not exist, if the location and membership do not match,
+     *         if the membership has expired or if the class time conflicts with another. True otherwise.
      */
-    private boolean validCheckIn(Member m, String fclass) {
+    private boolean validCheckIn(Member m, String className, String instructorName,
+                                    String locationName, FitnessClass fitClass) {
         Date today = new Date();
         boolean classExists = false;
         FitnessClasses classType = null;
@@ -440,8 +444,33 @@ public class GymManager {
         return true;
     }
 
-    private FitnessClasses checkTimeConflict(Member m, FitnessClass classType) {
-        Time time = classType.getTime();
+    /**
+     * Check the location of a fitness class if it exists. Used in validConditions().
+     * @param fclass FitnessClass object with data representing the fitness class to be checked.
+     * @return Location object representing the location of the fitness class if it exists, or null if it does not.
+     */
+    private Location locationCheck(FitnessClass fclass) {
+        for(int i = 0; i < schedule.getNumClasses(); i++) {
+            FitnessClass fitClass = schedule.getFitnessClass(i);
+            for(int j = 0; j < fitClass.getLength(); j++) {
+                if(fclass.getFitClass().equals(fitClass.getFitClass()) &&
+                        fclass.getInstructor().equals(fitClass.getInstructor()) &&
+                        !fclass.getLocation().equals(fitClass.getLocation())) {
+                    return fclass.getLocation();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Check if a class's time conflicts with another class's. Used in validCheckIn().
+     * @param m Member object representing the owner of the membership.
+     * @param fclass FitnessClass object with data representing the fitness class to be checked.
+     * @return FitnessClass object if it exists and does not conflict with another time, null otherwise.
+     */
+    private FitnessClass checkTimeConflict(Member m, FitnessClass fclass) {
+        Time time = fclass.getTime();
 
         for(int i = 0; i < schedule.getNumClasses(); i++) {
             FitnessClass fitClass = schedule.getFitnessClass(i);
@@ -457,11 +486,11 @@ public class GymManager {
 
 
     /**
-     * Checks if a Member can drop the class they specify by calling validDropClass(), and, if so, calls the
-     * drop() method from FitnessClass to remove the Member from the class database.
+     * Checks if a Member can drop the class they specify by calling validConditions(), and, if so, calls the
+     * drop() method from FitnessClass to remove the Member from the class.
      * Outputs whether the member has dropped the class.
-     * @param memberInfo array of Strings representing the name of the fitness class the Member want to drop,
-     *                   the Member's first name, last name, and date of birth as given from the command line input.
+     * @param memberInfo array of Strings representing the fitness class the Member want to drop, the Member's first
+     *                   name, last name, and date of birth as given from the command line input.
      */
     private void dropClass(String[] memberInfo) {
         Member m = new Member();
@@ -489,17 +518,28 @@ public class GymManager {
     }
 
     /**
-     * Checks if Member is able to drop the fitness class.
-     * Checks if the Member's date of birth is valid and if the specified class exists.
-     * Prints reason for Member being unable to drop the class if they do not satisfy all the conditions.
-     * @param m the Member to be removed from the class.
-     * @param fclass the name of the inputted fitness class the Member wants to drop.
-     * @return true if Member meets all the conditions to drop the class, false if not
+     * Checks if a Member's guest can drop the class they specify by calling validConditions(), and, if so, calls the
+     * dropGuest() method from FitnessClass to remove the Member's guest from the class.
+     * Outputs whether the Member's guest has dropped the class.
+     * @param memberInfo array of Strings representing the fitness class the Member want to drop, the Member's first
+     *                   name, last name, and date of birth as given from the command line input.
      */
-    private boolean validDropClass(Member m, String fclass) {
-        Date today = new Date();
-        boolean classExists = false;
-        FitnessClasses classType = null;
+    private void dropClassGuest(String[] memberInfo) {
+        FitnessClass fitClass = new FitnessClass();
+        Member m = new Member();
+        int count = 0;
+
+        String className = memberInfo[++count];
+        FitnessClasses fclass = findClass(className);
+        fitClass.setClass(fclass);
+
+        String instructorName = memberInfo[++count];
+        Instructors instructor = findInstructor(instructorName);
+        fitClass.setInstructor(instructor);
+
+        String locationName = memberInfo[++count];
+        Location location = findLocation(locationName);
+        fitClass.setLocation(location);
 
         if(!m.getDob().isValid()) {
             System.out.println("DOB " + m.getDob() + ": invalid calendar date!");

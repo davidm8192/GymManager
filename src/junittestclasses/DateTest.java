@@ -1,10 +1,14 @@
-package JUnitTestClasses;
+package junittestclasses;
 
 import fitnesschainmanager.Date;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit test classes for the isValid() method that checks if a given date is valid.
+ * @author David Ma, Ethan Kwok
+ */
 class DateTest {
 
     /**

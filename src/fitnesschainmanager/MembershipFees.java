@@ -1,5 +1,12 @@
 package fitnesschainmanager;
 
+/**
+ * MembershipFees Enum Class holds information related to the fees of a membership.
+ * Stores the length of a standard, family, and premium membership per payment. Stores the one-time fee of the
+ * standard and family memberships. Stores the monthly fees of the standard and family memberships. Stores the
+ * number of guest passes given for family and premium memberships.
+ * @author David Ma, Ethan Kwok
+ */
 public enum MembershipFees {
 
     STANDARD_LENGTH(3),
@@ -13,10 +20,18 @@ public enum MembershipFees {
 
     private final double value;
 
+    /**
+     * Creates a MembershipFees enum.
+     * @param value double representing the unrounded MembershipFees in dollars.
+     */
     MembershipFees(double value) {
         this.value = value;
     }
 
+    /**
+     * Getter method for finding the MembershipFees associated with a membership.
+     * @return double representing the unrounded MembershipFees in dollars.
+     */
     public double getValue() {
         return value;
     }

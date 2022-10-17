@@ -1,4 +1,4 @@
-package JUnitTestClasses;
+package junittestclasses;
 
 import fitnesschainmanager.Family;
 import fitnesschainmanager.Member;
@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit test classes for the membershipFee() method in the Premium subclass.
+ * @author David Ma, Ethan Kwok
+ */
 class PremiumTest {
 
     /**
