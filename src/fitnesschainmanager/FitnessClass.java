@@ -3,49 +3,34 @@ package fitnesschainmanager;
 import java.util.ArrayList;
 
 /**
- * FitnessClass holds the member databases for all the classes offered by the gym.
+ * FitnessClass holds the class information, members, and guests for a class offered by the gym.
  * Classes are modified through a member check in and drop method.
  * @author David Ma, Ethan Kwok
  */
 public class FitnessClass {
-    /*private MemberDatabase pilates;
-    private MemberDatabase spinning;
-    private MemberDatabase cardio;*/
-
     private FitnessClasses className;
     private Instructors instructor;
     private Time time;
     private Location location;
     private ArrayList<Member> fitClass;
+    private ArrayList<Member> guestList;
 
     /**
      * Creates a FitnessClass object and initializes the class databases.
      */
     public FitnessClass() {
-        /*pilates = new MemberDatabase();
-        spinning = new MemberDatabase();
-        cardio = new MemberDatabase();*/
-
         className = null;
         instructor = null;
         time = null;
         location = null;
         fitClass = new ArrayList<Member>();
-    }
-
-    public FitnessClass(FitnessClasses className, Instructors instructor, Time time, Location location) {
-        this.className = className;
-        this.instructor = instructor;
-        this.time = time;
-        this.location = location;
-        fitClass = new ArrayList<Member>();
+        guestList = new ArrayList<Member>();
     }
 
     /**
      * Checks member into the specified class if they are not already checked in.
      * Matches the inputted class name with the FitnessClasses enum and adds member to the class database.
      * @param member the Member to be checked into the fitness class.
-     * @param className the name of the fitness class the Member wants to check into.
      * @return true if Member was checked into the class, false if were not.
      */
     public boolean checkIn(Member member) {
@@ -89,7 +74,6 @@ public class FitnessClass {
      * Drops Member from specified class if they are in it.
      * Matches the inputted class name with the FitnessClasses enum and removes member from the class database.
      * @param member the Member in the specified fitness class that wants to drop it.
-     * @param className the name of the fitness class the Member wants to drop.
      * @return true if Member dropped the class, false if they were not able to.
      */
     public boolean drop(Member member) {
@@ -98,6 +82,7 @@ public class FitnessClass {
         }
         else {
             fitClass.remove(member);
+            return true;
         }
     }
 
@@ -164,13 +149,6 @@ public class FitnessClass {
     public Time getTime() {
         return time;
     }
-    public Member getMember(Member member) {
-        int index = fitClass.indexOf(member);
-        if(index != -1) {
-            return fitClass.get(index);
-        }
-        return null;
-    }
 
     /**
      * Getter method to find the size of the fitness class's arraylist.
@@ -180,11 +158,27 @@ public class FitnessClass {
         return fitClass.size();
     }
 
+    /**
+     * Checks to see if a given Member is in the fitness class's arraylist fitClass.
+     * @param member the Member to be searched for in the arraylist.
+     * @return true if the Member is in the arraylist, false if the Member is not.
+     */
+    public boolean memberCheck(Member member) {
+        return fitClass.contains(member);
+    }
+
+    /**
+     * Check if the given fitness class already exists in the fitness chain by comparing the name, instructor,
+     * and location.
+     * @param obj the FitnessClass object to be compared or, if it's not a FitnessClass, then an object that will
+     *            return false (because a non-FitnessClass cannot exist as a FitnessClass).
+     * @return true if the FitnessClass parameter already exists, false if it does not.
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof FitnessClass) {
             FitnessClass fitClass = (FitnessClass) obj;
-            if(fitClass.getClassName().equals(this.getClassName()) &&
+            if(fitClass.getFitClass().equals(this.getFitClass()) &&
                     fitClass.getInstructor().equals(this.getInstructor()) &&
                     fitClass.getLocation().equals(this.getLocation())) {
                 return true;
@@ -202,14 +196,22 @@ public class FitnessClass {
      */
     public String toString() {
         String str = "";
-        str = getClassName().name() + "-" + getInstructor().name() + ", "
+        str = getFitClass().name() + " - " + getInstructor().name() + ", "
                 + getTime().toString() + ", " + getLocation().name();
 
         if(!fitClass.isEmpty()) {
-            str += "\n- Participants -\n\t";
-
+            str += "\n- Participants -";
             for(Member m : fitClass) {
-                str = str + m.toString() + "\n";
+                str += "\n\t";
+                str += m.toString();
+            }
+        }
+
+        if(!guestList.isEmpty()) {
+            str += "\n- Guests -";
+            for(Member g : guestList) {
+                str += "\n\t";
+                str += g.toString();
             }
         }
 
