@@ -291,104 +291,15 @@ public class Member implements Comparable<Member> {
         return 0; // names are the same
     }
 
+    /**
+     * Calculates and returns a member's fees for a standard membership. This cost is given by the cost of a one-time
+     * fee, the cost of the monthly fees, and the payment frequency.
+     *
+     * @return double representing the unrounded fee in dollars of the Member.
+     */
     public double membershipFee() {
         return MembershipFees.ONE_TIME_FEE.getValue() + MembershipFees.STANDARD_LENGTH.getValue()
                 * MembershipFees.STANDARD_MONTHLY_FEE.getValue();
-    }
-
-    public String membershipType() {
-        return "Standard";
-    }
-
-    public int getNumGuestPass() {
-        return 0; //Standard memberships get 0 guest passes
-    }
-
-    /**
-     * Testbed main method to test the compareTo() method.
-     * @param args necessary, unused parameter in main method.
-     */
-    public static void main(String[] args) {
-        //test case 1
-        Member testcase1First = new Member();
-        Member testcase1Second = new Member();
-        testcase1First.setFname("Zeta");
-        testcase1First.setLname("Alpha");
-        testcase1Second.setFname("Alpha");
-        testcase1Second.setLname("Zeta");
-        System.out.println("Test case 1; expected output -1; test output " + testcase1First.compareTo(testcase1Second));
-
-        //test case 2
-        Member testcase2First = new Member();
-        Member testcase2Second = new Member();
-        testcase2First.setFname("Jane");
-        testcase2First.setLname("Doe");
-        testcase2Second.setFname("John");
-        testcase2Second.setLname("Doe");
-        System.out.println("Test case 2; expected output -1; test output " + testcase2First.compareTo(testcase2Second));
-
-        //test case 3
-        Member testcase3First = new Member();
-        Member testcase3Second = new Member();
-        testcase3First.setFname("John");
-        testcase3First.setLname("Smith");
-        testcase3Second.setFname("John");
-        testcase3Second.setLname("Smithh");
-        System.out.println("Test case 3; expected output -1; test output " + testcase3First.compareTo(testcase3Second));
-
-        //test case 4
-        Member testcase4First = new Member();
-        Member testcase4Second = new Member();
-        testcase4First.setFname("john");
-        testcase4First.setLname("doe");
-        testcase4Second.setFname("JOHN");
-        testcase4Second.setLname("DOE");
-        System.out.println("Test case 4; expected output 0; test output " + testcase4First.compareTo(testcase4Second));
-
-        //test case 5
-        Member testcase5First = new Member();
-        Member testcase5Second = new Member();
-        testcase5First.setFname("April");
-        testcase5First.setLname("March");
-        testcase5Second.setFname("Mary");
-        testcase5Second.setLname("Lindsey");
-        System.out.println("Test case 5; expected output 1; test output " + testcase5First.compareTo(testcase5Second));
-
-        //test case 6
-        Member testcase6First = new Member();
-        Member testcase6Second = new Member();
-        testcase6First.setFname("Duke");
-        testcase6First.setLname("Ellington");
-        testcase6Second.setFname("Roy");
-        testcase6Second.setLname("Brooks");
-        System.out.println("Test case 6; expected output 1; test output " + testcase6First.compareTo(testcase6Second));
-
-        //test case 7
-        Member testcase7First = new Member();
-        Member testcase7Second = new Member();
-        testcase7First.setFname("Kate");
-        testcase7First.setLname("Lindsey");
-        testcase7Second.setFname("Carl");
-        testcase7Second.setLname("Brown");
-        System.out.println("Test case 7; expected output 1; test output " + testcase7First.compareTo(testcase7Second));
-
-        //test case 8
-        Member testcase8First = new Member();
-        Member testcase8Second = new Member();
-        testcase8First.setFname("Paul");
-        testcase8First.setLname("Siegel");
-        testcase8Second.setFname("Bill");
-        testcase8Second.setLname("Scanlan");
-        System.out.println("Test case 8; expected output 1; test output " + testcase8First.compareTo(testcase8Second));
-
-        //test case 9
-        Member testcase9First = new Member();
-        Member testcase9Second = new Member();
-        testcase9First.setFname("John");
-        testcase9First.setLname("Doe");
-        testcase9Second.setFname("John");
-        testcase9Second.setLname("Doe");
-        System.out.println("Test case 9; expected output 0; test output " + testcase9First.compareTo(testcase9Second));
     }
 
 }

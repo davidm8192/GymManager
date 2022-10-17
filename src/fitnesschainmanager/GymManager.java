@@ -18,8 +18,6 @@ public class GymManager {
     private ClassSchedule schedule;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
-    public final static int FAMILY_DEFAULT_GUEST_PASS = 1;
-    public final static int PREMIUM_DEFAULT_GUEST_PASS = 3;
 
     /**
      * Creates a MemberDatabase and ClassSchedule object.
@@ -129,57 +127,12 @@ public class GymManager {
     }
 
     /**
-     * Creates and adds new Member with values according to the command line input if valid.
+     * Creates and adds new Member with a standard membership and values according to the command line input if valid.
+     * The expiration date of the membership is set to STANDARD_LENGTH months after the date of being added.
      * Sets the values of Member to match the input, checks if the Member is valid using the checkIfValid method,
-     * adds the member into MemberDatabase database, and then outputs the result.
+     * adds the member into MemberDatabase database, and then prints the result.
      * @param memberInfo array of Strings representing the information associated with the new Member.
      */
-/*    private void addMember(String[] memberInfo) {
-        Member m = new Member();
-        int count = 0;
-
-        String command = memberInfo[count++];
-
-        m.setFname(memberInfo[count++]);
-        m.setLname(memberInfo[count++]);
-
-        Date dob = new Date(memberInfo[count++]);
-        m.setDob(dob);
-
-        if (command.equals("A") || command.equals("AF")) {
-            Date expire = new Date();
-            expire.addMonths((int) MembershipFees.STANDARD_LENGTH.getValue());
-            m.setExpire(expire);
-        }
-        else if (command.equals("AP")) {
-            Date expire = new Date();
-            expire.addMonths((int) MembershipFees.PREMIUM_LENGTH.getValue());
-            m.setExpire(expire);
-        }
-        else { //case for LM when reading from memberList.txt
-            Date expire = new Date(memberInfo[count++]);
-            m.setExpire(expire);
-        }
-
-        String location = memberInfo[count];
-
-        for(Location loc : Location.values()) {
-            if(location.toUpperCase().equals(loc.name())) {
-                m.setLocation(loc);
-            }
-        }
-
-        // Add member to database
-        if(checkIfValid(m, location)) {
-            if(!database.add(m)) {
-                if (!command.equals("LM")) System.out.println(m.getFname() + " " + m.getLname() + " is already in the database.");
-            }
-            else {
-                if (!command.equals("LM")) System.out.println(m.getFname() + " " + m.getLname() + " added.");
-            }
-        }
-    }*/
-
     private void addStandardMember(String[] memberInfo) {
         Member m = new Member();
         int count = 0;
@@ -213,7 +166,13 @@ public class GymManager {
         }
     }
 
-
+    /**
+     * Creates and adds new Member with a family membership and values according to the command line input if valid.
+     * The expiration date of the membership is set to FAMILY_LENGTH months after the date of being added.
+     * Sets the values of Member to match the input, checks if the Member is valid using the checkIfValid method,
+     * adds the member into MemberDatabase database, and then prints the result.
+     * @param memberInfo array of Strings representing the information associated with the new Member.
+     */
     private void addFamilyMember(String[] memberInfo) {
         Family m = new Family();
         int count = 0;
@@ -236,7 +195,7 @@ public class GymManager {
             }
         }
 
-        m.setNumGuestPass(FAMILY_DEFAULT_GUEST_PASS);
+        m.setNumGuestPass((int)MembershipFees.FAMILY_GUEST_PASSES.getValue());
 
         // Add member to database
         if(checkIfValid(m, location)) {
@@ -249,7 +208,13 @@ public class GymManager {
         }
     }
 
-
+    /**
+     * Creates and adds new Member with a premium membership and values according to the command line input if valid.
+     * The expiration date of the membership is set to PREMIUM_LENGTH months after the date of being added.
+     * Sets the values of Member to match the input, checks if the Member is valid using the checkIfValid method,
+     * adds the member into MemberDatabase database, and then prints the result.
+     * @param memberInfo array of Strings representing the information associated with the new Member.
+     */
     private void addPremiumMember(String[] memberInfo) {
         Premium m = new Premium();
         int count = 0;
@@ -272,7 +237,7 @@ public class GymManager {
             }
         }
 
-        m.setNumGuestPass(PREMIUM_DEFAULT_GUEST_PASS);
+        m.setNumGuestPass((int)MembershipFees.PREMIUM_GUEST_PASSES.getValue());
 
         // Add member to database
         if(checkIfValid(m, location)) {
@@ -285,7 +250,13 @@ public class GymManager {
         }
     }
 
-
+    /**
+     * Reads and adds new Members with standard memberships from a text file, with values according to the text
+     * lines if valid. The expiration date of the membership is set based off the inputs in the text file.
+     * Sets the values of each Member to match the input, checks if the Member is valid using the checkIfValid method,
+     * adds the member into MemberDatabase database, and then prints the list of Members added.
+     * @param memberInfo array of Strings representing the information associated with the new Member.
+     */
     private void addMemberFromFile(String[] memberInfo) {
         Member m = new Member();
         int count = 0;

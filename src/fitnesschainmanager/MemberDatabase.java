@@ -107,7 +107,9 @@ public class MemberDatabase {
     public void print() {
         for (int i = 0; i < size; i++) {
             if (mlist[i] != null) {
+
                 System.out.println(mlist[i].toString());
+
             }
         }
     }
@@ -175,7 +177,7 @@ public class MemberDatabase {
      * @param upperBounds index for the upper bounds of each partition.
      * @param sortType arbitrary integer representing which one of the three sorting methods is to be used.
      */
-    public void quickSort(int lowerBounds, int upperBounds, int sortType) {
+    private void quickSort(int lowerBounds, int upperBounds, int sortType) {
         if (lowerBounds < upperBounds) {
             int index = partition(lowerBounds, upperBounds, sortType);
             quickSort(lowerBounds, index - 1, sortType);
@@ -191,7 +193,7 @@ public class MemberDatabase {
      * @param sortType arbitrary integer representing which one of the three sorting methods is to be used.
      * @return the new pointer to the low index pivot that is used as an index for the next quickSort() method call.
      */
-    public int partition(int lowerBounds, int upperBounds, int sortType) {
+    private int partition(int lowerBounds, int upperBounds, int sortType) {
         Member pivot = mlist[upperBounds];
         int lowPtr = lowerBounds - 1;
         for (int i = lowerBounds; i < upperBounds; i++) {
@@ -228,7 +230,7 @@ public class MemberDatabase {
      * @param first database array index of the first Member.
      * @param second database array index of the second Member.
      */
-    public void swap(int first, int second) {
+    private void swap(int first, int second) {
         Member temp = mlist[first];
         mlist[first] = mlist[second];
         mlist[second] = temp;

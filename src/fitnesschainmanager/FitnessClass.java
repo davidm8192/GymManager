@@ -49,17 +49,6 @@ public class FitnessClass {
      * @return true if Member was checked into the class, false if were not.
      */
     public boolean checkIn(Member member) {
-        /*switch(className.toUpperCase()) {
-            case "PILATES":
-                return pilates.add(member);
-            case "SPINNING":
-                return spinning.add(member);
-            case "CARDIO":
-                return cardio.add(member);
-            default:
-                return false;
-        }*/
-
         if(fitClass.contains(member)) {
             return false;
         }
@@ -70,51 +59,40 @@ public class FitnessClass {
     }
 
     /**
-     * Checks if there exists a time conflict between the fitness class the member wants to check into and the other
-     * fitness class(es) they are checked into, if any.
-     * @param member the Member that wants to check into the specified fitness class.
-     * @param fclass the FitnessClasses enum of the fitness class the Member wants to check into.
-     * @return FitnessClasses enum of the class that has a time conflict with the specified class the Member wants
-     * to check into.
+     * Adds a guest to the array list of guests to represent that a guest has checked in.
+     * @param member Family Member object who is using the guest pass.
+     * @return true if the guest has enough guest passes to check the guest in, false if not.
      */
-    /*public FitnessClasses checkTimeConflict(Member member, FitnessClasses fclass) {
-        if(fclass != FitnessClasses.PILATES && pilates.getMember(member) != null) {
-            if(fclass.getTime().equals(FitnessClasses.PILATES.getTime())) {
-                return FitnessClasses.PILATES;
-            }
+    public boolean checkInGuest(Family member) {
+        if(member.useGuestPass()) {
+            guestList.add(member);
+            return true;
         }
-        if(fclass != FitnessClasses.SPINNING && spinning.getMember(member) != null) {
-            if(fclass.getTime().equals(FitnessClasses.SPINNING.getTime())) {
-                return FitnessClasses.SPINNING;
-            }
-        }
-        if(fclass != FitnessClasses.CARDIO && cardio.getMember(member) != null) {
-            if(fclass.getTime().equals(FitnessClasses.CARDIO.getTime())) {
-                return FitnessClasses.CARDIO;
-            }
-        }
-        return null;
-    }*/
+        return false;
+    }
 
     /**
-     * Drops member from specified class if they are in it.
+     * Drops a guest Member from specified class if they are in it.
+     * @param member Member who invited the guest being dropped using their guest pass.
+     * @return true if Member's guest dropped the class, false if they were not able to.
+     */
+    public boolean dropGuest(Family member) {
+        if(guestList.contains(member)) {
+            member.addGuestPass();
+            guestList.remove(member);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Drops Member from specified class if they are in it.
      * Matches the inputted class name with the FitnessClasses enum and removes member from the class database.
      * @param member the Member in the specified fitness class that wants to drop it.
      * @param className the name of the fitness class the Member wants to drop.
      * @return true if Member dropped the class, false if they were not able to.
      */
     public boolean drop(Member member) {
-        /*switch(className.toUpperCase()) {
-            case "PILATES":
-                return pilates.remove(member);
-            case "SPINNING":
-                return spinning.remove(member);
-            case "CARDIO":
-                return cardio.remove(member);
-            default:
-                return false;
-        }*/
-
         if (!fitClass.contains(member)) {
             return false;
         }
@@ -123,18 +101,66 @@ public class FitnessClass {
         }
     }
 
-    public FitnessClasses getClassName() {
+    /**
+     * Sets the name of the fitness class to the parameter input name from the FitnessClasses enum.
+     * @param className FitnessClasses enum String representing the name of the class.
+     */
+    public void setClass(FitnessClasses className) {
+        this.className = className;
+    }
+
+    /**
+     * Sets the instructor of the fitness class to the parameter input name from the Instructors enum.
+     * @param instructor Instructor enum String representing the name of the instructor.
+     */
+    public void setInstructor(Instructors instructor) {
+        this.instructor = instructor;
+    }
+
+    /**
+     * Sets the location of the fitness class to a gym location given by the parameter input from the Location enum.
+     * @param location Location enum representing the location of the gym.
+     */
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    /**
+     * Sets the time of the fitness class based off the parameter input from the Time enum.
+     * @param time Time enum representing the time of the fitness class.
+     */
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    /**
+     * Getter method to find the name of a fitness class.
+     * @return FitnessClasses enum representing the name of the fitness class.
+     */
+    public FitnessClasses getFitClass() {
         return className;
     }
 
+    /**
+     * Getter method to find the instructor of a fitness class.
+     * @return Instructors enum representing the instructor of the fitness class.
+     */
     public Instructors getInstructor() {
         return instructor;
     }
 
+    /**
+     * Getter method to find the location of a fitness class.
+     * @return Location enum representing the location of the fitness class.
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * Getter method to find the time of a fitness class.
+     * @return Time enum representing the time of the fitness class.
+     */
     public Time getTime() {
         return time;
     }
@@ -146,6 +172,10 @@ public class FitnessClass {
         return null;
     }
 
+    /**
+     * Getter method to find the size of the fitness class's arraylist.
+     * @return int representing the size of the fitness class arraylist fitClass.
+     */
     public int getLength() {
         return fitClass.size();
     }
@@ -163,6 +193,13 @@ public class FitnessClass {
         return false;
     }
 
+    /**
+     * Converts a FitnessClass's information to a String.
+     * The format matches the output given in the expected output page. If the class is empty, it will not add anything
+     * to the String. Otherwise, it adds the name, instructor, time, location, and all participants and guests in the
+     * FitnessClass to the String output.
+     * @return String representing the FitnessClass's name, instructor, time, location, and all participants and guests.
+     */
     public String toString() {
         String str = "";
         str = getClassName().name() + "-" + getInstructor().name() + ", "
@@ -178,31 +215,4 @@ public class FitnessClass {
 
         return str;
     }
-
-
-    /**
-     * Prints schedule of the fitness classes.
-     * Lists the name of the fitness class and all the members in the class database for all fitness classes.
-     */
-    /*public void printSchedule() {
-        System.out.println("-Fitness classes-");
-        System.out.println(FitnessClasses.PILATES.toString());
-        if(!pilates.isEmpty()) {
-            System.out.println("\t** participants **");
-            pilates.print();
-        }
-
-        System.out.println(FitnessClasses.SPINNING.toString());
-        if(!spinning.isEmpty()) {
-            System.out.println("\t** participants **");
-            spinning.print();
-        }
-
-        System.out.println(FitnessClasses.CARDIO.toString());
-        if(!cardio.isEmpty()) {
-            System.out.println("\t** participants **");
-            cardio.print();
-        }
-    }*/
-
 }
