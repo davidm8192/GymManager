@@ -17,19 +17,6 @@ public class Premium extends Family {
     }
 
     /**
-     * Inherits the parameter inputs from the setter methods in the Family superclass into the Premium Member.
-     * @param fname String representing the Premium Member's first name.
-     * @param lname String representing the Premium Member's last name.
-     * @param dob Date representing the Premium Member's date of birth.
-     * @param expire Date representing the Premium Member's membership expiration date.
-     * @param location Location representing the location associated with the Premium Member's membership.
-     * @param numGuestPasses integer representing the number of guest passes owned by the Premium Member.
-     */
-    public Premium(String fname, String lname, Date dob, Date expire, Location location, int numGuestPasses) {
-        super(fname, lname, dob, expire, location, numGuestPasses);
-    }
-
-    /**
      * Gets the number of guest passes that the Family Member has left.
      * @return number of guest passes of the Family Member.
      */
